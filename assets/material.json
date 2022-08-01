@@ -1,20 +1,20 @@
 {
     "material": [
         {
-            "id" : 0.0,
-            "name" : "void",
-            "isSolid" : false,
+            "id": 0,
+            "name": "void",
+            "isSolid": false,
             "pictureIDs": [
                 "awesomePic",
                 "secondPic"
             ]
         },
         {
-            "id" : 1.0,
-            "name" : "void solid",
-            "isSolid" : true,
+            "id": 1,
+            "name": "void solid",
+            "isSolid": true,
             "pictureIDs": [
-              "nicePic"
+                "nicePic"
             ]
         }
     ]

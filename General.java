@@ -3,6 +3,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /** A collection of general purpose methods used by various other methods */
@@ -29,5 +30,21 @@ public class General {
 
         // Return JSON Object
         return(JSONObject) obj;
+    }
+
+
+
+    /** Tries to write JSON-Objects into files */
+    public static void writeJSONtoFile(JSONObject json, String filePath) {
+
+        // Try to create new file at given path and write JSON content
+        try {
+            FileWriter file = new FileWriter(filePath);
+            file.write(json.toJSONString());
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("JSON file created: " + json);
     }
 }

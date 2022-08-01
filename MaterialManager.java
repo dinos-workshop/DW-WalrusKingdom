@@ -14,15 +14,16 @@ public class MaterialManager {
     public ArrayList<Material> MATERIALS;
 
     /** Relative Path to the resource file containing the material types */
-    private String filePath = "./assets/material.json";
+    private String filePath;
 
 
 
     /** Default constructor which will load resources from the default save file */
-    public MaterialManager() {
+    public MaterialManager(String filePath) {
+        // backup file path
+        this.filePath = filePath;
         // load materials from file
         MATERIALS = new ArrayList<Material>();
-        loadMaterials(filePath);
     }
 
 
@@ -41,7 +42,14 @@ public class MaterialManager {
 
 
 
-    /** Will parse a JSON file and add all contained material types to the ArrayList */
+    /** Will parse a JSON file and add all contained material types to the ArrayList. Uses the default file. */
+    public void loadMaterials() {
+        loadMaterials(this.filePath);
+    }
+
+
+
+    /** Will parse a JSON file and add all contained material types to the ArrayList. Asks for a specific file to use. */
     public void loadMaterials(String filePath){
 
         // Try to read a .JSON file and return its parsed content as JSONObject
@@ -49,17 +57,16 @@ public class MaterialManager {
 
         // Iterate over Materials
         JSONArray Materials = (JSONArray) jsonObject.get("material");
-        Iterator materialIterator = Materials.iterator();
-        while (materialIterator.hasNext()) {
+        for (Object material : Materials) {
 
-            // Get Material's JSON Object
-            JSONObject currentMaterial = (JSONObject) materialIterator.next();
+            // Get JSONObject from current Material Object
+            JSONObject currentMaterial = (JSONObject) material;
 
-            // Get material's ID
-            int id = (int) (double) currentMaterial.get("id");
+            // Get Material's ID
+            long id = (long) currentMaterial.get("id");
 
             // Create new Material Instance
-            Material newMaterial = new Material(id);
+            Material newMaterial = new Material((int) id);
 
             // Get material's Name & Apply
             newMaterial.setName((String) currentMaterial.get("name"));
@@ -71,12 +78,67 @@ public class MaterialManager {
             JSONArray pictureIDs = (JSONArray)currentMaterial.get("pictureIDs");
 
             // Iterate over PictureIDs & Add them
-            Iterator picIterator = pictureIDs.iterator();
-            while (picIterator.hasNext()) {
-                newMaterial.addPictureID((String) picIterator.next().toString());
+            for (Object picture : pictureIDs) {
+                newMaterial.addPictureID((String) picture);
             }
 
             addMaterial(newMaterial);
         }
+    }
+
+
+
+    /** Will create a JSON file from the Material ArrayList and write it into a file. Uses the default file. */
+    public void saveMaterials() {
+        loadMaterials(this.filePath);
+    }
+
+
+
+    /** Will create a JSON file from the Material ArrayList and write it into a file. Asks for a specific file to use. */
+    public void saveMaterials(String filePath) {
+
+        // Create a new dummy JSONObject
+        JSONObject json = new JSONObject();
+
+        // Create JSONArray for all Materials
+        JSONArray material = new JSONArray();
+
+        // Insert Material Data into JSON
+        for (Material currentMaterial : MATERIALS ) {
+
+            // Create JSON Objects for each material type
+            JSONObject singleMaterial = new JSONObject();
+
+            /*
+            // Add empty JSON Array inside each Material's JSON Object
+            JSONArray singleMaterialArray = new JSONArray();
+
+            // Add values id, name and isSolid to the Array
+            singleMaterialArray.add("id : " + currentMaterial.id);
+            singleMaterialArray.add("name : " + currentMaterial.name);
+            singleMaterialArray.add("isSolid : " + currentMaterial.isSolid);
+            */
+
+            singleMaterial.put("id", currentMaterial.id);
+            singleMaterial.put("name", currentMaterial.name);
+            singleMaterial.put("isSolid", currentMaterial.isSolid);
+
+            // Create a new JSON Array for PictureIDs
+            JSONArray pictureIDs = new JSONArray();
+            for (String picture : currentMaterial.pictureID)
+                pictureIDs.add(picture);
+            singleMaterial.put("pictureIDs", pictureIDs);
+
+            // Insert Array for Material's Values into Material's Object
+        //    singleMaterial.put("", singleMaterialArray);
+
+            // Insert the current Material's Object into the Material's Array
+            material.add(singleMaterial);
+            json.put("material", material);
+        }
+
+        // Write JSON Object to file
+        General.writeJSONtoFile(json, filePath);
     }
 }
