@@ -3,19 +3,9 @@ public class window {
     /** Main class which will be called launching the game */
     public static void main(String[] args) {
 
-        // Initialise Material Manager so different Material Types can be handled
-        System.out.println("Initialising Material Manager");
-        MaterialManager materialManager = new MaterialManager("./assets/material.json");
 
-        System.out.println("Loading Material Data");
-        materialManager.loadMaterials();
+        General.Initialise();
 
-        System.out.println("Saving Material Data");
-        materialManager.saveMaterials("./assets/material_OUT.json");
-
-        System.out.println("Done");
-        // Initialise Map Manager so map data can be handled
-        // TODO: Implement map manager
     }
 }
 

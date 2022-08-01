@@ -20,8 +20,10 @@ public class MaterialManager {
 
     /** Default constructor which will load resources from the default save file */
     public MaterialManager(String filePath) {
-        // backup file path
+
+        // load default file path
         this.filePath = filePath;
+
         // load materials from file
         MATERIALS = new ArrayList<Material>();
     }

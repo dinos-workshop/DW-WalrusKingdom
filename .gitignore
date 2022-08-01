@@ -25,3 +25,6 @@ hs_err_pid*
 
 # IntelliJ's internal build system
 /out/**
+
+# IntelliJ's hidden files
+/.idea/**

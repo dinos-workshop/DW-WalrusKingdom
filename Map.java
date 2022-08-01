@@ -12,13 +12,15 @@ public class Map {
     int spawnY;
     ArrayList <ArrayList <MapTile> > mapData;
 
-    // TODO: after loading all the map data, iterate over all coordinates and layers in order to create a 2d-bool-array of isSolid (loading collision data)
 
-    // TODO: Javadoc Comment
+
+    /** The default constructor, only creating an empty first row and column for the 2D-Map */
     public Map() {
+
         // Adds first Row
         this.mapData.add(new ArrayList<MapTile>());
     }
+
 
 
     /** Adds a new MapTile at it's assigned position as defined by xPos and yPos */
@@ -26,4 +28,6 @@ public class Map {
         this.mapData.get(newMapTile.yPos).add(newMapTile.xPos, newMapTile);
     }
 }
+
+// TODO: after loading all the map data, iterate over all coordinates and layers in order to create a 2d-bool-array of isSolid (loading collision data)
 

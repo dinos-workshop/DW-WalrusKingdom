@@ -13,7 +13,7 @@ import java.util.Iterator;
 public class MapManager {
 
     /** The main game map */
-    // public ArrayList<Material> MATERIALS;
+    Map mainMap;
 
     /** Relative Path to the resource file containing the material types */
     private String filePath = "./assets/map.json";
@@ -22,9 +22,10 @@ public class MapManager {
 
     /** Default constructor which will load resources from the default save file */
     public MapManager() {
-        // load map from file
-        // ..
-        Map mainMap = loadMap(filePath);
+
+        // Load default File Path
+        this.filePath = filePath;
+
     }
 
 
@@ -33,68 +34,71 @@ public class MapManager {
 
 
 
-    /** Will parse a JSON file and add all contained material types to the ArrayList */
+    /** Will parse a JSON file and add all contained MapTiles to the returned Map element */
     public Map loadMap(String filePath) {
+
+        // Create dummy Map object
         Map currentMap = new Map();
 
         // Try to read a .JSON file and return its parsed content as JSONObject
         JSONObject jsonObject = General.getJSONfromFile(filePath);
 
-        // Iterate over X coords (rows) of map data (basically stacks of MapTiles)
-        JSONArray mapX = (JSONArray) jsonObject.get("x");
-        Iterator mapXIterator = mapX.iterator();
-        while (mapXIterator.hasNext()) {
+        // Iterate over MapTiles
+        JSONArray MapTiles = (JSONArray) jsonObject.get("MapTile");
+        for (Object mapTileObj : MapTiles) {
 
-            // Iterate over y coords (lines) of map data (basically a single MapTile)
-            JSONArray mapY = (JSONArray) jsonObject.get("y");
-            Iterator mapYIterator = mapY.iterator();
-            while (mapYIterator.hasNext()) {
+            // Create JSON Object of current MapTile and new temp MapTile dummy
+            JSONObject mapTileJSON = (JSONObject) mapTileObj;
+            MapTile currentMapTile = new MapTile();
 
-                // Create new temp MapTile dummy and JSON Object of current MapTile
-                MapTile currentMapTile = new MapTile();
-                JSONObject currentMapTileJSON = (JSONObject) mapYIterator.next();
-                // ...
+            // Apply MapTile's X and Y values
+            currentMapTile.setXPos((int) mapTileJSON.get("x"));
+            currentMapTile.setYPos((int) mapTileJSON.get("y"));
 
-                // Iterate over foreground materials on current MapTile
-                JSONArray foregroundMats = (JSONArray) jsonObject.get("foreground");
-                Iterator foregroundIterator = foregroundMats.iterator();
-                while (foregroundIterator.hasNext()) {
-                    // Add foreground materials
-                    // ...
-                    // currentMapTile.add(...)
-                }
+            // Apply MapTile's charOffsetY
+            currentMapTile.setCharOffsetY((int) mapTileJSON.get("charOffsetY"));
 
-                // Iterate over background materials on current MapTile
-                JSONArray backgroundMats = (JSONArray) jsonObject.get("background");
-                Iterator backgroundIterator = backgroundMats.iterator();
-                while (backgroundIterator.hasNext()) {
-                    // Add background materials
-                    // ...
-                    // currentMapTile.add(...)
-                }
+            // Iterate over foreground materials on current MapTile
+            JSONArray foregroundMats = (JSONArray) mapTileJSON.get("foreground");
+            for (Object materialObj : foregroundMats) {
 
-                // Iterate over triggerIDs on current MapTile
-                JSONArray triggerIDs = (JSONArray) jsonObject.get("triggers");
-                Iterator triggerIterator = triggerIDs.iterator();
-                while (triggerIterator.hasNext()) {
-                    // Add triggerID
-                    // ...
-                    // currentMapTile.add(...)
-                }
+                // Create JSON Object of the current Material
+                JSONObject materialJSON = (JSONObject) materialObj;
 
-                // Get charOffsetY of current MapTile
-                currentMapTile.setCharOffsetY((int) (double) currentMapTileJSON.get("charOffsetY"));
+                // Add the current Material to the current MapTile Dummy by handing over its ID
+                currentMapTile.addForegroundMaterial((int) materialJSON.get("id"));
 
-                // Get xPos of current MapTile
-                currentMapTile.setXPos((int) (double) currentMapTileJSON.get("xPos"));
-
-                // Get yPos of current MapTile
-                currentMapTile.setYPos((int) (double) currentMapTileJSON.get("yPos"));
-                // ...
-
-                // Add latest MapTile to Map
-               currentMap.addMapTile(currentMapTile);
             }
+
+            // Iterate over background materials on current MapTile
+            JSONArray backgroundMats = (JSONArray) mapTileJSON.get("background");
+            for (Object materialObj : backgroundMats) {
+
+                // Create JSON Object of the current Material
+                JSONObject materialJSON = (JSONObject) materialObj;
+
+                // Add the current Material to the current MapTile Dummy by handing over its ID
+                currentMapTile.addBackgroundMaterial((int) materialJSON.get("id"));
+
+            }
+
+
+
+
+
+            // Iterate over triggerIDs on current MapTile
+            JSONArray triggerIDs = (JSONArray) jsonObject.get("triggers");
+            Iterator triggerIterator = triggerIDs.iterator();
+            while (triggerIterator.hasNext()) {
+                // Add triggerID
+                // ...
+                // currentMapTile.add(...)
+            }
+
+
+
+            // Add latest MapTile to Map
+           currentMap.addMapTile(currentMapTile);
         }
         return currentMap;
     }
