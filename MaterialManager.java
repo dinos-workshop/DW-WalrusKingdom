@@ -44,21 +44,8 @@ public class MaterialManager {
     /** Will parse a JSON file and add all contained material types to the ArrayList */
     public void loadMaterials(String filePath){
 
-        // Create new JSON Parser
-        JSONParser parser = new JSONParser();
-
-        // Try to Read and parse JSON File
-        Object obj = null;
-        try {
-            obj = parser.parse(new FileReader(filePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        // Get JSON Object
-        JSONObject jsonObject = (JSONObject) obj;
+        // Try to read a .JSON file and return its parsed content as JSONObject
+        JSONObject jsonObject = General.getJSONfromFile(filePath);
 
         // Iterate over Materials
         JSONArray Materials = (JSONArray) jsonObject.get("material");
