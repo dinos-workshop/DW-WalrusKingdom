@@ -51,7 +51,12 @@ public class MapTile {
 
     /** Adds a Material to the Foreground Materials by its MaterialID */
     public void addForegroundMaterial(int materialID) {
-        foregroundMaterials.add(General.materialFromID(materialID));
+        Material material = General.materialFromID(materialID);
+        if (material != null) {
+            foregroundMaterials.add(material);
+        } else {
+            System.out.println("ERROR: Material id='" + materialID + "' has returned NULL during lookup. Please check material.json");
+        }
     }
 
 
@@ -64,7 +69,12 @@ public class MapTile {
 
     /** Adds a Material to the Background Materials by its MaterialID */
     public void addBackgroundMaterial(int materialID) {
-        backgroundMaterials.add(General.materialFromID(materialID));
+        Material material = General.materialFromID(materialID);
+        if (material != null) {
+            backgroundMaterials.add(material);
+        } else {
+            System.out.println("ERROR: Material id='" + materialID + "' has returned NULL during lookup. Please check material.json");
+        }
     }
 }
 

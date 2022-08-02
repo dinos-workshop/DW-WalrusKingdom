@@ -3,7 +3,7 @@ public class window {
     /** Main class which will be called launching the game */
     public static void main(String[] args) {
 
-
+        // Initialise the Game's resources
         General.Initialise();
 
     }

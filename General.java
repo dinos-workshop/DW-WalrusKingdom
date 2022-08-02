@@ -8,7 +8,37 @@ import java.io.IOException;
 
 /** A collection of general purpose methods used by various other methods */
 public class General {
+
+    /** The material manager's main instance */
     static MaterialManager materialManager;
+    // TODO: Rethink decision to put this instance here
+
+
+
+    /** Startup method which will initialise any required objects when the game launches */
+    public static void Initialise() {
+
+        // Initialise Material Manager so different Material Types can be handled
+        System.out.println("Initialising Material Manager");
+        materialManager = new MaterialManager("./assets/material.json");
+
+        // System.out.println("Loading Material Data");
+        // materialManager.loadMaterials();
+
+        // regenerate old data
+        OldMaterialData.LoadOldMaterialData();
+
+        // import old data
+        OldMaterialData.Import(materialManager);
+
+        System.out.println("Saving Material Data");
+        materialManager.saveMaterials("./assets/material_old.json");
+
+        System.out.println("Done");
+        // Initialise Map Manager so map data can be handled
+        // TODO: Implement map manager
+    }
+
 
 
     /** Tries to read a .JSON file and returns its parsed content as JSONObject */
@@ -58,21 +88,6 @@ public class General {
 
 
 
-    /** Startup method which will initialise any required objects when the game launches */
-    public static void Initialise() {
 
-        // Initialise Material Manager so different Material Types can be handled
-        System.out.println("Initialising Material Manager");
-        materialManager = new MaterialManager("./assets/material.json");
 
-        System.out.println("Loading Material Data");
-        materialManager.loadMaterials();
-
-        System.out.println("Saving Material Data");
-        materialManager.saveMaterials("./assets/material_OUT.json");
-
-        System.out.println("Done");
-        // Initialise Map Manager so map data can be handled
-        // TODO: Implement map manager
-    }
 }

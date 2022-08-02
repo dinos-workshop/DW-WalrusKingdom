@@ -24,7 +24,7 @@ Maps
 - [ ] Json Exporter for Map Data
 
 Old Game Data (from v1)
-- [ ] Import & adapt old Material Data
+- [x] Import & adapt old Material Data
 - [ ] Import & adapt old Map Data
 - [ ] Import old Tiles (Bitmaps)
 
