@@ -26,21 +26,25 @@ public class Material {
     public Material(int id){
         this.id = id;
         this.pictureID = new ArrayList<String>();
-    };
+    }
 
+    /** Overwrite the Name parameter */
     public void setName(String name) {
         this.name = name;
     }
 
+    /** Overwrite the isSolid parameter */
     public void setIsSolid(boolean isSolid) {
         this.isSolid = isSolid;
     }
 
+    /** Overwrite the PictureID Parameter with a new ArrayList containing only the new enty */
     public void setPictureID(String id) {
         this.pictureID = new ArrayList<String>();
         pictureID.add(id);
     }
 
+    /** Add another PictureID to the Material */
     public void addPictureID(String id) {
         this.pictureID.add(id);
     }
