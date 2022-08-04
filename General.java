@@ -9,21 +9,28 @@ import java.io.IOException;
 /** A collection of general purpose methods used by various other methods */
 public class General {
 
+    // The Trigger Manager's main instanec */
+    static TriggerManager triggerManager;
+
     /** The material manager's main instance */
     static MaterialManager materialManager;
-    // TODO: Rethink decision to put this instance here
+
+    // TODO: Rethink decision to put the main instances here
 
 
 
     /** Startup method which will initialise any required objects when the game launches */
     public static void Initialise() {
 
+        // Initialise Trigger Manager so different Trigger Types can be handled
+        triggerManager = new TriggerManager();
+
         // Initialise Material Manager so different Material Types can be handled
         System.out.println("Initialising Material Manager");
         materialManager = new MaterialManager("./assets/material.json");
 
-        // System.out.println("Loading Material Data");
-        // materialManager.loadMaterials();
+         System.out.println("Loading Material Data");
+         materialManager.loadMaterials();
 
         // regenerate old data
         OldMaterialData.LoadOldMaterialData();

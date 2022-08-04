@@ -2,15 +2,17 @@
 public enum Trigger {
 
     /** Press A to read the sign next to you */
-    MSG_READ_SIGN(TriggerStyle.POPUP_SINGLE),
+    MSG_READ_SIGN("MSG_READ_SIGN", TriggerStyle.POPUP_SINGLE),
 
     /** Press A to talk to the statue next to you */
-    MSG_TALK_TO_STATUE(TriggerStyle.POPUP_SINGLE);
+    MSG_TALK_TO_STATUE("MSG_TALK_TO_STATUE", TriggerStyle.POPUP_SINGLE);
 
     // TODO: Add more Triggers
 
     final TriggerStyle style;
-    Trigger(TriggerStyle style) {
+    final String name;
+    Trigger(String name, TriggerStyle style) {
+        this.name = name;
         this.style = style;
     }
 

@@ -76,5 +76,21 @@ public class MapTile {
             System.out.println("ERROR: Material id='" + materialID + "' has returned NULL during lookup. Please check material.json");
         }
     }
+
+
+
+    /** Adds a Trigger to the MapTile */
+    public void addTrigger(Trigger trigger) {
+        triggerIDs.add(trigger);
+    }
+
+
+
+    /** Adds a Trigger to the MapTile by its Name */
+    public void addTrigger(String trigger) {
+
+        // Get the Trigger object from MaterialManager and add it to the ArrayList of Triggers
+        this.addTrigger(General.triggerManager.getTriggerByName(trigger));
+    }
 }
 
