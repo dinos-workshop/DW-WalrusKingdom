@@ -28,14 +28,21 @@ public class MaterialManager {
 
     /** Adds a new Material at it's assigned position as defined by the material's ID */
     public void addMaterial(Material material) {
+
         // Add new Material type at assigned ID
         MATERIALS.add(material.id, material);
-        System.out.print("'" + material.name + "' has been added, Pictures {");
+
+        //System.out.print("'" + material.name + "' has been added, Pictures {");
+        System.out.print('.');
+
+        /*
+        // Iterate over all included pictureIDs and print each of them
         for (String id : material.pictureID) {
             System.out.print(id + ", ");
         }
         System.out.print("}, id='" + material.id+"'");
         System.out.println();
+         */
     }
 
 
@@ -53,7 +60,7 @@ public class MaterialManager {
         // Try to read a .JSON file and return its parsed content as JSONObject
         JSONObject jsonObject = General.getJSONfromFile(filePath);
 
-        // Iterate over Materials
+        // Iterate over Materials in JSON Object
         JSONArray Materials = (JSONArray) jsonObject.get("material");
         for (Object material : Materials) {
 
@@ -80,15 +87,21 @@ public class MaterialManager {
                 newMaterial.addPictureID((String) picture);
             }
 
+            // Add the new Material to the Material Manager
             addMaterial(newMaterial);
         }
+
+        // All Materials have been parsed and added to the Material Manager
+        System.out.println(" Done");
     }
 
 
 
     /** Will create a JSON file from the Material ArrayList and write it into a file. Uses the default file. */
     public void saveMaterials() {
-        loadMaterials(this.filePath);
+
+        // Calls overloaded method but with default file path as none was given
+        saveMaterials(this.filePath);
     }
 
 
@@ -129,14 +142,19 @@ public class MaterialManager {
             singleMaterial.put("pictureIDs", pictureIDs);
 
             // Insert Array for Material's Values into Material's Object
-        //    singleMaterial.put("", singleMaterialArray);
+            // singleMaterial.put("", singleMaterialArray);
 
             // Insert the current Material's Object into the Material's Array
             material.add(singleMaterial);
             json.put("material", material);
+
+            System.out.print('.');
         }
 
         // Write JSON Object to file
         General.writeJSONtoFile(json, filePath);
+
+        // All Material Data has been saved to the JSON File
+        System.out.println(" Done");
     }
 }

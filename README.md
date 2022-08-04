@@ -9,13 +9,17 @@ Most parts of the basic engine were already working but quite some interactive f
 After the first version was little more than a proof of concept (writing an entire game engine with little more that Arrays, Ints and Strings) the second version aims to be an actual game that is hopefully fun to play.
 
 
-## Current state of development:
+## Current state of development (as of v0.0.6.1):
 
 Materials
 - [x] Data Structure for Material Types
 - [x] Material Manager taking care of Material Types
 - [x] Json Importer for Material Types
 - [x] Json Exporter for Material Types
+
+Triggers
+- [x] Data Structure for Trigger Types
+- [x] Trigger Manager taking care of Triggers
 
 Maps
 - [x] Data Structure for Maps

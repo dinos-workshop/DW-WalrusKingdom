@@ -15,6 +15,9 @@ public class General {
     /** The material manager's main instance */
     static MaterialManager materialManager;
 
+    /** The map manager's main instance */
+    static MapManager mapManager;
+
     // TODO: Rethink decision to put the main instances here
 
 
@@ -23,26 +26,30 @@ public class General {
     public static void Initialise() {
 
         // Initialise Trigger Manager so different Trigger Types can be handled
+        System.out.println("Initialising Trigger Manager");
         triggerManager = new TriggerManager();
 
         // Initialise Material Manager so different Material Types can be handled
         System.out.println("Initialising Material Manager");
         materialManager = new MaterialManager("./assets/material.json");
 
+        // Load Material Data from JSON File into Material Manager
          System.out.println("Loading Material Data");
          materialManager.loadMaterials();
 
         // regenerate old data
-        OldMaterialData.LoadOldMaterialData();
+        // OldMaterialData.LoadOldMaterialData();
 
         // import old data
-        OldMaterialData.Import(materialManager);
+        // OldMaterialData.Import(materialManager);
 
-        System.out.println("Saving Material Data");
-        materialManager.saveMaterials("./assets/material_old.json");
+        // Save all Material Data to the JSON file again, making sure only valid JSON Data is stored there
+        System.out.println("Saving Material Data (Making sure JSON is valid)");
+        materialManager.saveMaterials();
 
-        System.out.println("Done");
         // Initialise Map Manager so map data can be handled
+        System.out.println("Initialising Map Manager");
+        
         // TODO: Implement map manager
     }
 
@@ -77,13 +84,20 @@ public class General {
 
         // Try to create new file at given path and write JSON content
         try {
+
+            // Create a new FileWriter for the given File Path
             FileWriter file = new FileWriter(filePath);
+
+            // Parse the JSON Data to a String and write it
             file.write(json.toJSONString());
+
+            // Close the fileWriter again
             file.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("JSON file created: " + json);
+        // System.out.println("JSON file created: " + json);
     }
 
 

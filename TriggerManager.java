@@ -12,11 +12,15 @@ public class TriggerManager {
     public TriggerManager() {
 
         // Iterate over all Triggers
+        System.out.println("Loading Trigger Data");
         for (Trigger trigger : Trigger.values()) {
 
             // Add each of them to the HashMap for easy access
             this.addTrigger(trigger);
         }
+
+        // All Triggers have been added
+        System.out.println(" Done");
     }
 
 
@@ -26,7 +30,8 @@ public class TriggerManager {
 
         // Add new Trigger type as well as its Name to the Trigger Hashmap
         TRIGGERS.put(trigger.name(), trigger);
-        System.out.print("'" + trigger.name() + "' has been added");
+        System.out.print('.');
+        //System.out.print("'" + trigger.name() + "' has been added");
     }
 
 
