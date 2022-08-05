@@ -48,9 +48,10 @@ public class MapManager {
         // Iterate over separate Maps defined inside JSONObject
         JSONArray mapsJSON = (JSONArray) jsonObject.get("Maps");
 
-        // Create a temp Map Dummy to b
+        // Create a temp Map Dummy to use for each Map Object inside the File
         Map currentMap = new Map();
 
+        // Iterate over all Maps defined inside the JSON File
         for (Object mapObj : mapsJSON) {
 
             // For each Map: Create JSON Object of current Map Object
@@ -61,7 +62,11 @@ public class MapManager {
             JSONObject mapInfoObj = (JSONObject) mapInfoJSON;
 
             // Apply the Map Name
-            currentMap.setName((String) mapInfoObj.get("name"));
+            String mapName = (String) mapInfoObj.get("name");
+            currentMap.setName(mapName);
+
+            // Track Progress
+            System.out.println("Initialising map '" + mapName + "' (1/2)");
 
             // Apply the Map Spawn Position
             currentMap.setSpawnX((int) (long) mapInfoObj.get("spawnX"));
@@ -70,10 +75,7 @@ public class MapManager {
             // Apply the initial Spawn Direction
             currentMap.setSpawnDir((String) mapInfoObj.get("spawnDir"));
 
-            // Apply the Map Size
-            currentMap.setSize((int) (long) mapInfoObj.get("height"), (int) (long) mapInfoObj.get("width"));
-
-            // Apply the Map's FillMaterial which will be stacked in case the Map is smaller than the screen area
+            // Apply the Map's Size and FillMaterial which will be stacked in case the Map is smaller than the screen area
 
             // Get the JSON Object for the FillMaterial Array
             Object fillMatObj = mapInfoObj.get("fillMaterial");
@@ -98,13 +100,18 @@ public class MapManager {
                 fillMat.addBackgroundMaterial((int) (long) materialObj);
             }
 
-            // Apply the now created FillMaterial
-            currentMap.setFillMaterial(fillMat);
+            // Apply the now created Fill Material together with the Map Size
+            currentMap.setSize((int) (long) mapInfoObj.get("height"), (int) (long) mapInfoObj.get("width"), fillMat);
+
+
 
             // Apply the actual Map Data
 
             // Get the current maps Data as a JSON Object, containing all the current Map's MapTiles
             JSONArray mapDataJSON = (JSONArray) mapJSON.get("data");
+
+            // Track Progress
+            System.out.println("Initialising map '" + mapName + "' (2/2)");
 
             // Iterate over separate MapTiles defined inside JSONObject using a JSONObject
             for (Object currentMapTileObj : mapDataJSON) {
@@ -148,7 +155,11 @@ public class MapManager {
                 // Add latest MapTile to current Map
                 currentMap.addMapTile(currentMapTile);
 
+                // Track Progress
+                System.out.print('.');
+
             }
+            System.out.println(" Done");
         }
         MAPS.add(currentMap);
         // TODO: Add iteration over different maps in one file, adding each one separately

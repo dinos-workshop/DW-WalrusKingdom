@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /** A complete Map made up of a 2D-Array of separate MapTiles. It also contains map-specific information.
  * mapData: The actual map data
@@ -42,7 +43,8 @@ public class Map {
 
         }
 
-        System.out.println("size="+this.mapData.size()+"x" + this.mapData.get(newMapTile.yPos).size() + " pos="+newMapTile.yPos+","+newMapTile.xPos);
+        //System.out.println("size="+this.mapData.size()+"x" + this.mapData.get(newMapTile.yPos).size() + " pos="+newMapTile.yPos+","+newMapTile.xPos);
+        //Add the mapTile
         this.mapData.get(newMapTile.yPos).add(newMapTile.xPos, newMapTile);
     }
 
@@ -53,30 +55,60 @@ public class Map {
         this.name = name;
     }
 
+
+
     /** Set the X-Coordinate for any new character's spawn point on the map */
     public void setSpawnX(int spawnX) {
         this.spawnX = spawnX;
     }
+
+
 
     /** Set the Y-Coordinate for any new character's spawn point on the map */
     public void setSpawnY(int spawnY) {
         this.spawnY = spawnY;
     }
 
+
+
     /** Set the direction which a newly spawned character will face */
     public void setSpawnDir(String spawnDir) {
         this.spawnDir = spawnDir;
     }
 
+
+
     /** Apply the given map size to the 2D ArrayList */
-    public void setSize(int width, int height) {
+    public void setSize(int width, int height, MapTile fillMaterial) {
+
+        // Apply new values
         this.height = height;
         this.width = width;
+        this.fillMaterial = fillMaterial;
+
+        // Set reserved Space for Map ArrayList
         while (this.mapData.size() < this.height) {
             this.mapData.add(new ArrayList<MapTile>(this.width));
-            System.out.println("size="+this.mapData.size()+"x" + this.mapData.get(0).size() + " set to "+this.height+"x"+this.width);
+            // System.out.println("size="+this.mapData.size()+"x" + this.mapData.get(0).size() + " set to "+this.height+"x"+this.width);
         }
+
+        // Iterate over 2D ArrayList and fill the ArrayList with the intended fillerMaterial
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+
+                // Add FillerMaterial which will be overwritten with actual MapData
+                this.mapData.get(y).add(this.fillMaterial);
+            }
+
+            // Track progress
+            System.out.print('.');
+        }
+
+        // The ArrayList has been set to the intended size, job well done
+        System.out.println(" Done");
     }
+
+
 
     /** Set the Filling Material which will be stretched around the edges should the map be smaller than the screen area */
     public void setFillMaterial(MapTile fillMaterial) {
