@@ -1,0 +1,95 @@
+{
+  "Maps": [
+    {
+      "info": [{
+        "name": "main_map",
+        "spawnX": 5,
+        "spawnY": 20,
+        "spawnDir": "east",
+        "fillMaterial": {
+          "foreground": [
+            0
+          ],
+          "background": [
+            3,
+            5
+          ]
+        }
+      }],
+      "data": [
+        {
+          "x": 0,
+          "y": 0,
+          "foreground": [
+            0,
+            1,
+            2
+          ],
+          "background": [
+            3,
+            4
+          ]
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "foreground": [
+            0,
+            5,
+            7
+          ],
+          "background": [
+            3,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "info": [{
+        "name": "second_map",
+        "spawnX": 5,
+        "spawnY": 20,
+        "spawnDir": "east",
+        "fillMaterial": {
+          "foreground": [
+            0
+          ],
+          "background": [
+            3,
+            5
+          ]
+        }
+      }],
+      "data": [
+        {
+          "x": 0,
+          "y": 0,
+          "foreground": [
+            0,
+            1,
+            2
+          ],
+          "background": [
+            3,
+            4
+          ]
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "foreground": [
+            0,
+            1,
+            2
+          ],
+          "background": [
+            3,
+            4
+          ]
+        }
+      ]
+    }
+  ]
+}
+

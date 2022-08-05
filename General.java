@@ -49,7 +49,8 @@ public class General {
 
         // Initialise Map Manager so map data can be handled
         System.out.println("Initialising Map Manager");
-        
+        MapManager mapManager = new MapManager("./assets/map.json");
+        mapManager.loadMap();
         // TODO: Implement map manager
     }
 
