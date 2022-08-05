@@ -1,56 +1,68 @@
 {
   "Maps": [
     {
-      "info": [{
+      "info": {
         "name": "main_map",
         "spawnX": 5,
         "spawnY": 20,
         "spawnDir": "east",
+        "width": 5,
+        "height": 3,
         "fillMaterial": {
           "foreground": [
-            0
+            1
           ],
           "background": [
             3,
             5
           ]
         }
-      }],
+      },
       "data": [
         {
           "x": 0,
           "y": 0,
+          "charOffsetY": 0,
           "foreground": [
-            0,
             1,
-            2
+            2,
+            3
           ],
           "background": [
             3,
             4
+          ],
+          "triggers": [
+            ""
           ]
         },
         {
-          "x": 0,
+          "x": 2,
           "y": 0,
+          "charOffsetY": 0,
           "foreground": [
-            0,
+            2,
             5,
             7
           ],
           "background": [
             3,
             8
+          ],
+          "triggers": [
+            "fancyTrigger"
           ]
         }
       ]
     },
     {
-      "info": [{
+      "info": {
         "name": "second_map",
         "spawnX": 5,
         "spawnY": 20,
         "spawnDir": "east",
+        "width": 5,
+        "height": 3,
         "fillMaterial": {
           "foreground": [
             0
@@ -60,11 +72,12 @@
             5
           ]
         }
-      }],
+      },
       "data": [
         {
           "x": 0,
           "y": 0,
+          "charOffsetY": 0,
           "foreground": [
             0,
             1,
@@ -73,11 +86,15 @@
           "background": [
             3,
             4
+          ],
+          "triggers": [
+            ""
           ]
         },
         {
           "x": 0,
           "y": 0,
+          "charOffsetY": 0,
           "foreground": [
             0,
             1,
@@ -86,10 +103,12 @@
           "background": [
             3,
             4
+          ],
+          "triggers": [
+            ""
           ]
         }
       ]
     }
   ]
 }
-

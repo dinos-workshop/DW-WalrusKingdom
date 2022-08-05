@@ -10,7 +10,11 @@ public class Map {
     String name;
     int spawnX;
     int spawnY;
-    ArrayList <ArrayList <MapTile> > mapData;
+    int width;
+    int height;
+    String spawnDir;
+    MapTile fillMaterial; // stacked outside the map should the map be smaller than the screen area
+    ArrayList <ArrayList <MapTile> > mapData = new ArrayList <ArrayList <MapTile> >();
 
 
 
@@ -18,14 +22,65 @@ public class Map {
     public Map() {
 
         // Adds first Row
-        this.mapData.add(new ArrayList<MapTile>());
+        // this.mapData.add(new ArrayList<MapTile>());
     }
 
 
 
     /** Adds a new MapTile at it's assigned position as defined by xPos and yPos */
     public void addMapTile(MapTile newMapTile) {
+        // TODO: Check for collisions
+
+        // Add empty ArrayList to adapt map's first dimension if necessary
+        while (this.mapData.size() <= newMapTile.yPos) {
+            this.mapData.add(new ArrayList<MapTile>());
+        }
+
+        // Add empty Fields to adapt map's second dimension if necessary
+        while (this.mapData.get(newMapTile.yPos).size() <= newMapTile.xPos) {
+            this.mapData.get(newMapTile.yPos).add(null);
+
+        }
+
+        System.out.println("size="+this.mapData.size()+"x" + this.mapData.get(newMapTile.yPos).size() + " pos="+newMapTile.yPos+","+newMapTile.xPos);
         this.mapData.get(newMapTile.yPos).add(newMapTile.xPos, newMapTile);
+    }
+
+
+
+    /** Set the Name of the Map */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /** Set the X-Coordinate for any new character's spawn point on the map */
+    public void setSpawnX(int spawnX) {
+        this.spawnX = spawnX;
+    }
+
+    /** Set the Y-Coordinate for any new character's spawn point on the map */
+    public void setSpawnY(int spawnY) {
+        this.spawnY = spawnY;
+    }
+
+    /** Set the direction which a newly spawned character will face */
+    public void setSpawnDir(String spawnDir) {
+        this.spawnDir = spawnDir;
+    }
+
+    /** Apply the given map size to the 2D ArrayList */
+    public void setSize(int width, int height) {
+        this.height = height;
+        this.width = width;
+        while (this.mapData.size() < this.height) {
+            this.mapData.add(new ArrayList<MapTile>(this.width));
+            System.out.println("size="+this.mapData.size()+"x" + this.mapData.get(0).size() + " set to "+this.height+"x"+this.width);
+        }
+    }
+
+    /** Set the Filling Material which will be stretched around the edges should the map be smaller than the screen area */
+    public void setFillMaterial(MapTile fillMaterial) {
+        this.fillMaterial = fillMaterial;
     }
 }
 

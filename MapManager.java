@@ -53,57 +53,49 @@ public class MapManager {
 
         for (Object mapObj : mapsJSON) {
 
-            // For each Map: Create JSON Object of current JSON Map
+            // For each Map: Create JSON Object of current Map Object
             JSONObject mapJSON = (JSONObject) mapObj;
 
             // Get the current maps Info as a JSON Object
-            JSONArray mapInfoJSON = (JSONArray) mapJSON.get("info");
-            JSONObject mapInfoObj = (JSONObject) (Object) mapInfoJSON;
+            Object mapInfoJSON = mapJSON.get("info");
+            JSONObject mapInfoObj = (JSONObject) mapInfoJSON;
 
             // Apply the Map Name
             currentMap.setName((String) mapInfoObj.get("name"));
 
             // Apply the Map Spawn Position
-            currentMap.setSpawnX((int) mapInfoObj.get("spawnX"));
-            currentMap.setSpawnY((int) mapInfoObj.get("spawnY"));
+            currentMap.setSpawnX((int) (long) mapInfoObj.get("spawnX"));
+            currentMap.setSpawnY((int) (long) mapInfoObj.get("spawnY"));
 
             // Apply the initial Spawn Direction
             currentMap.setSpawnDir((String) mapInfoObj.get("spawnDir"));
 
             // Apply the Map Size
-            currentMap.setWidth((int) mapInfoObj.get("width"));
-            currentMap.setHeight((int) mapInfoObj.get("height"));
+            currentMap.setSize((int) (long) mapInfoObj.get("height"), (int) (long) mapInfoObj.get("width"));
 
             // Apply the Map's FillMaterial which will be stacked in case the Map is smaller than the screen area
 
             // Get the JSON Object for the FillMaterial Array
-            JSONArray fillMatJSON = (JSONArray) jsonObject.get("fillMaterial");
-            JSONObject fillMatObj = (JSONObject) (Object) fillMatJSON;
+            Object fillMatObj = mapInfoObj.get("fillMaterial");
+            JSONObject fillMatJSON = (JSONObject) fillMatObj;
 
             // Create a Dummy MapTile for the Filler Material
             MapTile fillMat = new MapTile();
 
             // Iterate over foreground materials of Filler Material
-            JSONArray foregroundMats = (JSONArray) fillMatObj.get("foreground");
+            JSONArray foregroundMats = (JSONArray) fillMatJSON.get("foreground");
             for (Object materialObj : foregroundMats) {
 
-                // For all Foreground Materials: Create JSON Object of the current Material
-                JSONObject materialJSON = (JSONObject) materialObj;
-
-                // Add the current Material to the FillMaterial Dummy by handing over its ID
-                fillMat.addForegroundMaterial((int) materialJSON.get("id"));
+                // For all Foreground Materials: Add the current Material to the FillMaterial Dummy by handing over its ID
+                fillMat.addForegroundMaterial((int) (long) materialObj);
             }
 
             // Iterate over background materials of Filler Material
-            JSONArray backgroundMats = (JSONArray) fillMatObj.get("background");
+            JSONArray backgroundMats = (JSONArray) fillMatJSON.get("background");
             for (Object materialObj : backgroundMats) {
 
-                // For all Background Materials: Create JSON Object of the current Material
-                JSONObject materialJSON = (JSONObject) materialObj;
-
-                // Add the current Material to the FillMaterial Dummy by handing over its ID
-                fillMat.addBackgroundMaterial((int) materialJSON.get("id"));
-
+                // For all Background Materials: Add the current Material to the FillMaterial Dummy by handing over its ID
+                fillMat.addBackgroundMaterial((int) (long) materialObj);
             }
 
             // Apply the now created FillMaterial
@@ -122,32 +114,26 @@ public class MapManager {
                 MapTile currentMapTile = new MapTile();
 
                 // Apply MapTile's X and Y values
-                currentMapTile.setXPos((int) currentMapTileJSON.get("x"));
-                currentMapTile.setYPos((int) currentMapTileJSON.get("y"));
+                currentMapTile.setXPos((int) (long) currentMapTileJSON.get("x"));
+                currentMapTile.setYPos((int) (long) currentMapTileJSON.get("y"));
 
                 // Apply MapTile's charOffsetY
-                currentMapTile.setCharOffsetY((int) currentMapTileJSON.get("charOffsetY"));
+                currentMapTile.setCharOffsetY((int) (long) currentMapTileJSON.get("charOffsetY"));
 
                 // Iterate over foreground materials on current MapTile in order to add them
                 foregroundMats = (JSONArray) currentMapTileJSON.get("foreground");
                 for (Object materialObj : foregroundMats) {
 
-                    // For all Foreground Materials: Create JSON Object of the current Material
-                    JSONObject materialJSON = (JSONObject) materialObj;
-
-                    // Add the current Material to the current MapTile Dummy by handing over its ID
-                    currentMapTile.addForegroundMaterial((int) materialJSON.get("id"));
+                    // For all Foreground Materials: Add the current Material to the current MapTile Dummy by handing over its ID
+                    currentMapTile.addForegroundMaterial((int) (long) materialObj);
                 }
 
                 // Iterate over background materials on current MapTile in order to add them
                 backgroundMats = (JSONArray) currentMapTileJSON.get("background");
                 for (Object materialObj : backgroundMats) {
 
-                    // For all Background Materials: Create JSON Object of the current Material
-                    JSONObject materialJSON = (JSONObject) materialObj;
-
-                    // Add the current Material to the current MapTile Dummy by handing over its ID
-                    currentMapTile.addBackgroundMaterial((int) materialJSON.get("id"));
+                    // For all Background Materials: Add the current Material to the current MapTile Dummy by handing over its ID
+                    currentMapTile.addBackgroundMaterial((int) (long) materialObj);
 
                 }
 
@@ -155,11 +141,8 @@ public class MapManager {
                 JSONArray triggerIDs = (JSONArray) currentMapTileJSON.get("triggers");
                 for (Object triggerObj : triggerIDs) {
 
-                    // For all TriggerIDs: Create JSON Object of the current Trigger
-                    JSONObject triggerJSON = (JSONObject) triggerObj;
-
-                    // Add the current Trigger to the current MapTile Dummy by handing over its ID
-                    currentMapTile.addTrigger((String) triggerJSON.get("Name"));
+                    // For all TriggerIDs: Add the current Trigger to the current MapTile Dummy by handing over its Name
+                    currentMapTile.addTrigger((String) triggerObj);
                 }
 
                 // Add latest MapTile to current Map

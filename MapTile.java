@@ -7,9 +7,9 @@ import java.util.ArrayList;
  * charOffsetY: Value by which characters at this position will be shifted up/down, to be used for stairs and bridges to imply height levels
  */
 public class MapTile {
-    ArrayList<Material> foregroundMaterials;
-    ArrayList<Material> backgroundMaterials;
-    ArrayList<Trigger> triggerIDs;
+    ArrayList<Material> foregroundMaterials = new ArrayList<Material>();
+    ArrayList<Material> backgroundMaterials = new ArrayList<Material>();
+    ArrayList<Trigger> triggerIDs = new ArrayList<Trigger>();
     int charOffsetY;
     int xPos;
     int yPos;
@@ -44,7 +44,7 @@ public class MapTile {
 
     /** Adds a Material to the Foreground Materials */
     public void addForegroundMaterial(Material material) {
-        foregroundMaterials.add(material);
+        this.foregroundMaterials.add(material);
     }
 
 
@@ -53,7 +53,7 @@ public class MapTile {
     public void addForegroundMaterial(int materialID) {
         Material material = General.materialFromID(materialID);
         if (material != null) {
-            foregroundMaterials.add(material);
+            this.foregroundMaterials.add(material);
         } else {
             System.out.println("ERROR: Material id='" + materialID + "' has returned NULL during lookup. Please check material.json");
         }
@@ -62,7 +62,7 @@ public class MapTile {
 
     /** Adds a Material to the Background Materials */
     public void addBackgroundMaterial(Material material) {
-        backgroundMaterials.add(material);
+        this.backgroundMaterials.add(material);
     }
 
 
@@ -71,7 +71,7 @@ public class MapTile {
     public void addBackgroundMaterial(int materialID) {
         Material material = General.materialFromID(materialID);
         if (material != null) {
-            backgroundMaterials.add(material);
+            this.backgroundMaterials.add(material);
         } else {
             System.out.println("ERROR: Material id='" + materialID + "' has returned NULL during lookup. Please check material.json");
         }
@@ -81,7 +81,7 @@ public class MapTile {
 
     /** Adds a Trigger to the MapTile */
     public void addTrigger(Trigger trigger) {
-        triggerIDs.add(trigger);
+        this.triggerIDs.add(trigger);
     }
 
 

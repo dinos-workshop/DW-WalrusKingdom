@@ -80,7 +80,7 @@ public class MaterialManager {
             newMaterial.setIsSolid((boolean) currentMaterial.get("isSolid"));
 
             // Get array of material's pictureID(s)
-            JSONArray pictureIDs = (JSONArray)currentMaterial.get("pictureIDs");
+            JSONArray pictureIDs = (JSONArray) currentMaterial.get("pictureIDs");
 
             // Iterate over PictureIDs & Add them
             for (Object picture : pictureIDs) {
