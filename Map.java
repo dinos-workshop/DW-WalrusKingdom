@@ -30,22 +30,19 @@ public class Map {
 
     /** Adds a new MapTile at it's assigned position as defined by xPos and yPos */
     public void addMapTile(MapTile newMapTile) {
-        // TODO: Check for collisions
 
-        // Add empty ArrayList to adapt map's first dimension if necessary
-        while (this.mapData.size() <= newMapTile.yPos) {
-            this.mapData.add(new ArrayList<MapTile>());
-        }
+        System.out.println("id: " + newMapTile.foregroundMaterials.get(0).id);
 
-        // Add empty Fields to adapt map's second dimension if necessary
-        while (this.mapData.get(newMapTile.yPos).size() <= newMapTile.xPos) {
-            this.mapData.get(newMapTile.yPos).add(null);
+        // Limit both xPos and yPos to the Map size
+        int yPos = Math.min(this.mapData.size() - 1, newMapTile.yPos);
+        int xPos = Math.min(this.mapData.get(yPos).size() - 1, newMapTile.xPos);
 
-        }
+        // Check if the requested position is actually outside the Map
+        if ((yPos != newMapTile.yPos) || (xPos != newMapTile.xPos))
+            System.out.println("WARN: Out of bounds map tile coordinate: (x" + newMapTile.xPos + "/y" + newMapTile.yPos);
 
-        //System.out.println("size="+this.mapData.size()+"x" + this.mapData.get(newMapTile.yPos).size() + " pos="+newMapTile.yPos+","+newMapTile.xPos);
-        //Add the mapTile
-        this.mapData.get(newMapTile.yPos).add(newMapTile.xPos, newMapTile);
+        // Add the MapTile at the adapted coordinates, overwriting the default FillerMaterial
+        this.mapData.get(yPos).set(xPos, newMapTile);
     }
 
 
@@ -106,6 +103,25 @@ public class Map {
 
         // The ArrayList has been set to the intended size, job well done
         System.out.println(" Done");
+    }
+
+
+    /** Will print the first Foreground Material's ID of each MapTile to give a general Idea about a map */
+    public void showFirstLayerMap() {
+
+        // Iterate over Y-Coordinate of Map Data
+        for (ArrayList<MapTile> y : mapData) {
+
+            // Iterate over X-Coordinate of Map Data
+            for (MapTile x : y) {
+
+                // Print the first of the Foreground-Material's IDs
+                System.out.print(x.foregroundMaterials.get(0).id + "   ");
+            }
+
+            // Add a line break
+            System.out.println("");
+        }
     }
 
 

@@ -9,7 +9,7 @@ import java.io.IOException;
 /** A collection of general purpose methods used by various other methods */
 public class General {
 
-    // The Trigger Manager's main instanec */
+    // The Trigger Manager's main instance */
     static TriggerManager triggerManager;
 
     /** The material manager's main instance */
@@ -49,7 +49,7 @@ public class General {
 
         // Initialise Map Manager so map data can be handled
         System.out.println("Initialising Map Manager");
-        MapManager mapManager = new MapManager("./assets/map.json");
+        mapManager = new MapManager("./assets/map.json");
         mapManager.loadMap();
         // TODO: Implement map manager
     }

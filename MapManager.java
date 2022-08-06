@@ -48,11 +48,11 @@ public class MapManager {
         // Iterate over separate Maps defined inside JSONObject
         JSONArray mapsJSON = (JSONArray) jsonObject.get("Maps");
 
-        // Create a temp Map Dummy to use for each Map Object inside the File
-        Map currentMap = new Map();
-
         // Iterate over all Maps defined inside the JSON File
         for (Object mapObj : mapsJSON) {
+
+            // Create a temp Map Dummy to use for each Map Object inside the File
+            Map currentMap = new Map();
 
             // For each Map: Create JSON Object of current Map Object
             JSONObject mapJSON = (JSONObject) mapObj;
@@ -121,8 +121,10 @@ public class MapManager {
                 MapTile currentMapTile = new MapTile();
 
                 // Apply MapTile's X and Y values
-                currentMapTile.setXPos((int) (long) currentMapTileJSON.get("x"));
-                currentMapTile.setYPos((int) (long) currentMapTileJSON.get("y"));
+                int xPos = (int) (long) currentMapTileJSON.get("x");
+                int yPos = (int) (long) currentMapTileJSON.get("y");
+                currentMapTile.setXPos(xPos);
+                currentMapTile.setYPos(yPos);
 
                 // Apply MapTile's charOffsetY
                 currentMapTile.setCharOffsetY((int) (long) currentMapTileJSON.get("charOffsetY"));
@@ -155,13 +157,17 @@ public class MapManager {
                 // Add latest MapTile to current Map
                 currentMap.addMapTile(currentMapTile);
 
+                // TODO: REMOVE DEBUG CODE
+                System.out.println("Added tile at y="+yPos+", x="+xPos);
+                currentMap.showFirstLayerMap();
+
                 // Track Progress
                 System.out.print('.');
 
             }
             System.out.println(" Done");
+            MAPS.add(currentMap);
         }
-        MAPS.add(currentMap);
         // TODO: Add iteration over different maps in one file, adding each one separately
     }
 }

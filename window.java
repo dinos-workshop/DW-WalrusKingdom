@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class window {
 
     /** Main class which will be called launching the game */
@@ -5,6 +7,8 @@ public class window {
 
         // Initialise the Game's resources
         General.Initialise();
+
+        // maps.get(0).showFirstLayerMap();
 
     }
 }
