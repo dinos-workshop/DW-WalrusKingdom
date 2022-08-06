@@ -31,15 +31,13 @@ public class Map {
     /** Adds a new MapTile at it's assigned position as defined by xPos and yPos */
     public void addMapTile(MapTile newMapTile) {
 
-        System.out.println("id: " + newMapTile.foregroundMaterials.get(0).id);
-
         // Limit both xPos and yPos to the Map size
         int yPos = Math.min(this.mapData.size() - 1, newMapTile.yPos);
         int xPos = Math.min(this.mapData.get(yPos).size() - 1, newMapTile.xPos);
 
         // Check if the requested position is actually outside the Map
         if ((yPos != newMapTile.yPos) || (xPos != newMapTile.xPos))
-            System.out.println("WARN: Out of bounds map tile coordinate: (x" + newMapTile.xPos + "/y" + newMapTile.yPos);
+            System.out.println("WARN: Out of bounds map tile coordinate: (x" + newMapTile.xPos + "/y" + newMapTile.yPos + ')');
 
         // Add the MapTile at the adapted coordinates, overwriting the default FillerMaterial
         this.mapData.get(yPos).set(xPos, newMapTile);
@@ -109,18 +107,20 @@ public class Map {
     /** Will print the first Foreground Material's ID of each MapTile to give a general Idea about a map */
     public void showFirstLayerMap() {
 
+        System.out.println("Map layout (top level foreground only):");
         // Iterate over Y-Coordinate of Map Data
         for (ArrayList<MapTile> y : mapData) {
 
+            System.out.print("[ ");
             // Iterate over X-Coordinate of Map Data
             for (MapTile x : y) {
 
                 // Print the first of the Foreground-Material's IDs
-                System.out.print(x.foregroundMaterials.get(0).id + "   ");
+                System.out.printf("%4s", x.foregroundMaterials.get(0).id);
             }
 
             // Add a line break
-            System.out.println("");
+            System.out.println(" ]");
         }
     }
 

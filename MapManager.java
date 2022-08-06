@@ -90,7 +90,6 @@ public class MapManager {
 
                 // For all Foreground Materials: Add the current Material to the FillMaterial Dummy by handing over its ID
                 fillMat.addForegroundMaterial((int) (long) materialObj);
-                // System.out.println("material id: "+(int) (long) materialObj);
             }
 
             // Iterate over background materials of Filler Material
@@ -102,9 +101,9 @@ public class MapManager {
             }
 
             // Apply the now created Fill Material together with the Map Size
-            currentMap.setSize((int) (long) mapInfoObj.get("height"), (int) (long) mapInfoObj.get("width"), fillMat);
-
-
+            int height = (int) (long) mapInfoObj.get("height");
+            int width = (int) (long) mapInfoObj.get("width");
+            currentMap.setSize(width, height, fillMat);
 
             // Apply the actual Map Data
 
@@ -112,7 +111,7 @@ public class MapManager {
             JSONArray mapDataJSON = (JSONArray) mapJSON.get("data");
 
             // Track Progress
-            System.out.println("Initialising map '" + mapName + "' (2/2)");
+            System.out.println("Initialising " + width + 'x' + height + " map '" + mapName + " (2/2)");
 
             // Iterate over separate MapTiles defined inside JSONObject using a JSONObject
             for (Object currentMapTileObj : mapDataJSON) {

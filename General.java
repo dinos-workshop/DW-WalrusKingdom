@@ -44,8 +44,8 @@ public class General {
         // OldMaterialData.Import(materialManager);
 
         // Save all Material Data to the JSON file again, making sure only valid JSON Data is stored there
-        System.out.println("NOT Saving Material Data (Making sure JSON is valid) AS IT BREAKS STUFF");
-        // materialManager.saveMaterials();
+        System.out.println("Saving Material Data (Making sure JSON is valid)");
+        materialManager.saveMaterials();
 
         // Initialise Map Manager so map data can be handled
         System.out.println("Initialising Map Manager");

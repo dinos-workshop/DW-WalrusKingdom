@@ -21,7 +21,7 @@ public class MaterialManager {
         this.filePath = filePath;
 
         // load materials from file
-        MATERIALS = new ArrayList<Material>();
+        MATERIALS = new ArrayList<Material>(1);
     }
 
 
@@ -29,8 +29,15 @@ public class MaterialManager {
     /** Adds a new Material at it's assigned position as defined by the material's ID */
     public void addMaterial(Material material) {
 
+        // Should the Material Collection not have enough slots, add new ones
+        if (MATERIALS.size()<=material.id) {
+            for (int size = MATERIALS.size(); size <= material.id; size++) {
+                MATERIALS.add(new Material(size));
+            }
+        }
+
         // Add new Material type at assigned ID
-        MATERIALS.add(material.id, material);
+        MATERIALS.set(material.id, material);
 
         //System.out.print("'" + material.name + "' has been added, Pictures {");
         System.out.print('.');
