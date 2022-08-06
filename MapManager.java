@@ -90,6 +90,7 @@ public class MapManager {
 
                 // For all Foreground Materials: Add the current Material to the FillMaterial Dummy by handing over its ID
                 fillMat.addForegroundMaterial((int) (long) materialObj);
+                // System.out.println("material id: "+(int) (long) materialObj);
             }
 
             // Iterate over background materials of Filler Material
@@ -157,17 +158,16 @@ public class MapManager {
                 // Add latest MapTile to current Map
                 currentMap.addMapTile(currentMapTile);
 
-                // TODO: REMOVE DEBUG CODE
-                System.out.println("Added tile at y="+yPos+", x="+xPos);
-                currentMap.showFirstLayerMap();
-
                 // Track Progress
                 System.out.print('.');
 
             }
+            // The map data has been put into a new Map object. Adding it to Maps Array
             System.out.println(" Done");
             MAPS.add(currentMap);
+
+            // Display the newly added map
+            currentMap.showFirstLayerMap();
         }
-        // TODO: Add iteration over different maps in one file, adding each one separately
     }
 }

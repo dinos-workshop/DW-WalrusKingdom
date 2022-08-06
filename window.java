@@ -8,8 +8,6 @@ public class window {
         // Initialise the Game's resources
         General.Initialise();
 
-        // maps.get(0).showFirstLayerMap();
-
     }
 }
 
