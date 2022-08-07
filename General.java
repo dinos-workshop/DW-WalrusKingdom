@@ -37,7 +37,7 @@ public class General {
          System.out.println("Loading Material Data");
          materialManager.loadMaterials();
 
-        // regenerate old data
+        // Regenerate old Material Data
         // OldMaterialData.LoadOldMaterialData();
 
         // import old data
@@ -51,7 +51,11 @@ public class General {
         System.out.println("Initialising Map Manager");
         mapManager = new MapManager("./assets/map.json");
         mapManager.loadMap();
-        // TODO: Implement map manager
+
+        // Regenerate old Map Data
+        System.out.println("Loading old Map Data");
+        OldMapData.loadCity1();
+        OldMapData.Import(mapManager);
     }
 
 
@@ -105,11 +109,16 @@ public class General {
 
     /** Returns a material from the Material Collection by its MaterialID */
     public static Material materialFromID(int materialID) {
+        // System.out.println("getMaterialFromID("+materialID+") => #"+materialManager.MATERIALS.get(materialID).id);
         return materialManager.MATERIALS.get(materialID);
     }
 
 
 
+    public static int getBetween(int _min, int _x, int _max) {
+        int _ans = Math.max(_min, Math.min(_max, _x));
+        return _ans;
+    }
 
 
 }

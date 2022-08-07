@@ -7,9 +7,9 @@ import java.util.ArrayList;
  * charOffsetY: Value by which characters at this position will be shifted up/down, to be used for stairs and bridges to imply height levels
  */
 public class MapTile {
-    ArrayList<Material> foregroundMaterials = new ArrayList<Material>();
-    ArrayList<Material> backgroundMaterials = new ArrayList<Material>();
-    ArrayList<Trigger> triggerIDs = new ArrayList<Trigger>();
+    ArrayList<Material> foregroundMaterials;
+    ArrayList<Material> backgroundMaterials;
+    ArrayList<Trigger> triggerIDs;
     int charOffsetY;
     int xPos;
     int yPos;
@@ -17,7 +17,11 @@ public class MapTile {
 
 
     /** Default (empty) constructor used if all parameters are to be added later */
-    public MapTile() { }
+    public MapTile() {
+        this.foregroundMaterials = new ArrayList<Material>(1);
+        this.backgroundMaterials = new ArrayList<Material>(1);
+        this.triggerIDs = new ArrayList<Trigger>(1);
+    }
 
 
 

@@ -40,6 +40,7 @@ public class Map {
             System.out.println("WARN: Out of bounds map tile coordinate: (x" + newMapTile.xPos + "/y" + newMapTile.yPos + ')');
 
         // Add the MapTile at the adapted coordinates, overwriting the default FillerMaterial
+        // System.out.println("Added material #" + newMapTile.foregroundMaterials.get(0).id + " at x="+xPos+" y="+yPos);
         this.mapData.get(yPos).set(xPos, newMapTile);
     }
 
