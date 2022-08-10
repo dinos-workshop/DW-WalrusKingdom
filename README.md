@@ -9,7 +9,7 @@ Most parts of the basic engine were already working but quite some interactive f
 After the first version was little more than a proof of concept (writing an entire game engine with little more that Arrays, Ints and Strings) the second version aims to be an actual game that is hopefully fun to play.
 
 
-## Current state of development (as of v0.0.11):
+## Current state of development (as of v0.0.12):
 
 Materials
 - [x] Data Structure for Material Types
@@ -26,7 +26,7 @@ Maps
 - [x] Initialisation for Maps
 - [x] Map Manager taking care of Maps
 - [x] Json Importer for Map Data
-- [ ] Json Exporter for Map Data
+- [x] Json Exporter for Map Data
 
 Game Data
 - [ ] Add checks for broken JSON files or missing contents

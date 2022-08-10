@@ -34,8 +34,8 @@ public class General {
         materialManager = new MaterialManager("./assets/material.json");
 
         // Load Material Data from JSON File into Material Manager
-         System.out.println("Loading Material Data");
-         materialManager.loadMaterials();
+        System.out.println("Loading Material Data");
+        materialManager.loadMaterials();
 
         // Regenerate old Material Data
         // OldMaterialData.LoadOldMaterialData();
@@ -50,18 +50,28 @@ public class General {
         // Initialise Map Manager so map data can be handled
         System.out.println("Initialising Map Manager");
         mapManager = new MapManager("./assets/map.json");
-        mapManager.loadMap();
+        mapManager.loadMaps();
 
-        // Regenerate old Map Data
-        System.out.println("Loading old Map Data");
-        OldMapData.loadCity1();
-        OldMapData.Import(mapManager);
-        OldMapData.loadForestHouse();
-        OldMapData.Import(mapManager);
-        OldMapData.loadMenu();
-        OldMapData.Import(mapManager);
-        OldMapData.loadIntro1();
-        OldMapData.Import(mapManager);
+        if (true) {
+            // Regenerate old Map Data
+            System.out.println("Loading old Map Data");
+            OldMapData.loadCity1();
+            OldMapData.Import(mapManager);
+            OldMapData.loadForestHouse();
+            OldMapData.Import(mapManager);
+            OldMapData.loadMenu();
+            OldMapData.Import(mapManager);
+            OldMapData.loadIntro1();
+            OldMapData.Import(mapManager);
+            // Save all Map Data to a JSON file
+            System.out.println("Saving Map Data");
+            mapManager.saveMaps("./assets/map.json");
+            // Re-Import Map Data to detect any Errors
+            System.out.println("Trying to load freshly exported Map Data");
+            mapManager.loadMaps();
+
+        }
+
     }
 
 

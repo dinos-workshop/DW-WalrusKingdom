@@ -1,7 +1,6 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /** Manages loading all map data */
 public class MapManager {
@@ -33,14 +32,14 @@ public class MapManager {
 
 
     /** Will parse a JSON file and return all contained MapTiles as a Map element. Uses the default file. */
-    public void loadMap() {
-        loadMap(this.filePath);
+    public void loadMaps() {
+        loadMaps(this.filePath);
     }
 
 
 
     /** Will parse a JSON file and return all contained MapTiles as a Map element */
-    public void loadMap(String filePath) {
+    public void loadMaps(String filePath) {
 
         // Try to read a .JSON file and return its parsed content as JSONObject
         JSONObject jsonObject = General.getJSONfromFile(filePath);
@@ -168,5 +167,136 @@ public class MapManager {
             // Display the newly added map
             currentMap.showFirstLayerMap();
         }
+    }
+
+
+
+    /** Will create a JSON file from the Maps ArrayList and write it into a file. Uses the default file. */
+    public void saveMaps() {
+
+        // Calls overloaded method but with default file path as none was given
+        saveMaps(this.filePath);
+    }
+
+
+
+    /** Will create a JSON file from the Maps ArrayList and write it into a file. Asks for a specific file to use. */
+    public void saveMaps(String filePath) {
+
+        // Create a new dummy JSONObject
+        JSONObject json = new JSONObject();
+
+        // Create JSONArray for all Maps
+        JSONArray maps = new JSONArray();
+
+        // Insert Material Data into JSON
+        for (Map currentMap : MAPS ) {
+
+            // Create JSON Objects for each map
+            JSONObject currentMapObj = new JSONObject();
+
+            // Apply Info Data to new JSON Object
+            JSONObject MapInfoObj = new JSONObject();
+            MapInfoObj.put("name", currentMap.name);
+            MapInfoObj.put("spawnX", currentMap.spawnX);
+            MapInfoObj.put("spawnY", currentMap.spawnY);
+            MapInfoObj.put("spawnDir", currentMap.spawnDir);
+            MapInfoObj.put("width", currentMap.width);
+            MapInfoObj.put("height", currentMap.height);
+
+            // TODO: Support Triggers inside FillMaterial
+
+            // Create Objects for Filler Material
+            JSONObject fillMaterialObj = new JSONObject();
+            JSONArray foregroundFillMatArray = new JSONArray();
+            JSONArray backgroundFillMatArray = new JSONArray();
+
+            // Apply Filler Material
+            for (Material material : currentMap.fillMaterial.foregroundMaterials)
+                foregroundFillMatArray.add(material.id);
+            for (Material material : currentMap.fillMaterial.backgroundMaterials)
+                backgroundFillMatArray.add(material.id);
+
+            // Create correct JSON Structure for Filler Material
+            fillMaterialObj.put("foreground", foregroundFillMatArray);
+            fillMaterialObj.put("background", backgroundFillMatArray);
+            MapInfoObj.put("fillMaterial", fillMaterialObj);
+
+            // Add Info Array to the Map's JSON Object
+            currentMapObj.put("info", MapInfoObj);
+
+            // Create Outer JSON Structure for Map Data (Array will contain Objects for each MapTile)
+            JSONArray MapDataArray = new JSONArray();
+
+            // TODO: Make sure height and width parameters actually comply with map data
+            // Iterate over separate Map Tiles
+            for (int yPos = 0; yPos < currentMap.height; yPos++) {
+                for (int xPos = 0; xPos < currentMap.width; xPos++) {
+
+                    // Get currently handled MapTile for easier access
+                    MapTile currentMapTile = currentMap.mapData.get(yPos).get(xPos);
+
+                    // Create JSON Object for current Map Tile
+                    JSONObject MapDataObj = new JSONObject();
+
+                    // Create JSON Structure for Map Data
+                    JSONArray foregroundArray = new JSONArray();
+                    JSONArray backgroundArray = new JSONArray();
+                    JSONArray triggerArray = new JSONArray();
+
+                    // Apply Material IDs and Triggers
+                    if (currentMapTile != null) {
+                        for (Material foregroundMat : currentMapTile.foregroundMaterials)
+                            foregroundArray.add(foregroundMat.id);
+
+                        for (Material backgroundMat : currentMapTile.backgroundMaterials)
+                            backgroundArray.add(backgroundMat.id);
+
+                        // Make sure the MapTile has any triggers
+                        if ((currentMapTile.triggerIDs.size() != 0) && (currentMapTile.triggerIDs.get(0) != null)) {
+                            for (Trigger triggerNames : currentMapTile.triggerIDs) {
+                                triggerArray.add(triggerNames.name);
+                            }
+                        }
+                    }
+
+                    // Put freshly filled Data Arrays into correct JSON Structure
+                    MapDataObj.put("foreground", foregroundArray);
+                    MapDataObj.put("background", backgroundArray);
+                    MapDataObj.put("triggers", triggerArray);
+
+                    // TODO: Add Coords to Filler Material MapTiles so they don't all return as x=0,y=0
+                    // TODO: Filter MapTiles only containing FillerMaterial Data, maybe by adding a special isFiller Trigger?
+
+                    // Add additional data to current MapTile.
+                    MapDataObj.put("x", xPos);
+                    MapDataObj.put("y", yPos);
+                    MapDataObj.put("charOffsetY", currentMapTile.charOffsetY);
+
+                    // Add current MapTile's Data to the Array
+                    MapDataArray.add(MapDataObj);
+
+                }
+                // Log progress (only for lines to reduce spam)
+                System.out.print('.');
+            }
+
+            // Add Data Array to the Map's JSON Object
+            currentMapObj.put("data", MapDataArray);
+
+            // Add the finished map object to the Array
+            maps.add(currentMapObj);
+
+            // The Map's Data has been saved to the JSON File
+            System.out.println(" Done");
+
+        }
+
+        // Write JSON Object to file
+        json.put("Maps", maps);
+        General.writeJSONtoFile(json, filePath);
+
+        // All Map Data has been saved to the JSON File
+        System.out.println("Done saving a total of " + MAPS.size() + " maps");
     }
 }

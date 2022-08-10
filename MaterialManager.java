@@ -128,16 +128,6 @@ public class MaterialManager {
             // Create JSON Objects for each material type
             JSONObject singleMaterial = new JSONObject();
 
-            /*
-            // Add empty JSON Array inside each Material's JSON Object
-            JSONArray singleMaterialArray = new JSONArray();
-
-            // Add values id, name and isSolid to the Array
-            singleMaterialArray.add("id : " + currentMaterial.id);
-            singleMaterialArray.add("name : " + currentMaterial.name);
-            singleMaterialArray.add("isSolid : " + currentMaterial.isSolid);
-            */
-
             singleMaterial.put("id", currentMaterial.id);
             singleMaterial.put("name", currentMaterial.name);
             singleMaterial.put("isSolid", currentMaterial.isSolid);
