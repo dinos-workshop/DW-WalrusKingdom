@@ -50,7 +50,7 @@ public class General {
         // Initialise Map Manager so map data can be handled
         System.out.println("Initialising Map Manager");
         mapManager = new MapManager("./assets/map.json");
-        mapManager.loadMaps();
+        //  mapManager.loadMaps();
 
         if (true) {
             // Regenerate old Map Data
@@ -68,7 +68,7 @@ public class General {
             mapManager.saveMaps("./assets/map.json");
             // Re-Import Map Data to detect any Errors
             System.out.println("Trying to load freshly exported Map Data");
-            mapManager.loadMaps();
+            // mapManager.loadMaps();
 
         }
 

@@ -197,6 +197,7 @@ public class MapManager {
 
             // Apply Info Data to new JSON Object
             JSONObject MapInfoObj = new JSONObject();
+            System.out.println("Map: "+currentMap.name);
             MapInfoObj.put("name", currentMap.name);
             MapInfoObj.put("spawnX", currentMap.spawnX);
             MapInfoObj.put("spawnY", currentMap.spawnY);
