@@ -404,24 +404,23 @@ public class OldMapData {
         MapTile fillMaterial = new MapTile();
         fillMaterial.addBackgroundMaterial(0);
         Map currentMap = new Map();
-        currentMap.setSize(Map[0].length, Map.length, fillMaterial);
+        currentMap.setSize(Map.length, Map[0].length, fillMaterial);
 
         // Iterate over the fields of the 2D-Array
-        for (int yPos = 0; yPos < Map.length; yPos++) {
-            for (int xPos = 0; xPos < Map[yPos].length; xPos++) {
-
-                // reset the MapTile Dummy Object
+        for (int xPos = 0; xPos < Map.length; xPos++) {
+            for (int yPos = 0; yPos < Map[xPos].length; yPos++) {
+                    // reset the MapTile Dummy Object
                 currentMapTile = new MapTile();
 
-                // Get the Map data and extract both the foreground and background materialID an stuff them into the MapTile
-                int materialID = (int) Map[yPos][xPos];
+                // Get the Map data and extract both the foreground and background materialID and stuff them into the MapTile
+                int materialID = (int) Map[xPos][yPos];
                 int foregroundMaterial = materialID % 901;
                 int backgroundMaterial = (int) Math.floor(materialID / 901);
                 // System.out.println("material #: "+foregroundMaterial +" & " + backgroundMaterial);
                 // currentMapTile.foregroundMaterials.set(0,General.materialFromID(foregroundMaterial));
                 currentMapTile.addForegroundMaterial(foregroundMaterial);
                 currentMapTile.addBackgroundMaterial(backgroundMaterial);
-                currentMapTile.addTrigger(EventMap[yPos][xPos]+"");
+                currentMapTile.addTrigger(EventMap[xPos][yPos]+"");
 
                 // Apply coordinates to MapTile
                 currentMapTile.setXPos(xPos);
@@ -433,9 +432,9 @@ public class OldMapData {
             }
         }
         // Add the new Map to the MapManager's Map Collection
-        mapManager.MAPS.add(2, currentMap);
+        mapManager.MAPS.add(currentMap);
 
         // Display a simplified representation of the Map Data for sanity checks
-        mapManager.MAPS.get(2).showFirstLayerMap();
+        mapManager.MAPS.get(mapManager.MAPS.size()-1).showFirstLayerMap();
     }
 }

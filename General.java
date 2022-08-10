@@ -56,6 +56,12 @@ public class General {
         System.out.println("Loading old Map Data");
         OldMapData.loadCity1();
         OldMapData.Import(mapManager);
+        OldMapData.loadForestHouse();
+        OldMapData.Import(mapManager);
+        OldMapData.loadMenu();
+        OldMapData.Import(mapManager);
+        OldMapData.loadIntro1();
+        OldMapData.Import(mapManager);
     }
 
 
