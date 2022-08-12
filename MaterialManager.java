@@ -1,6 +1,7 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /** Manages loading all material types as well as their respective getters and setters */
@@ -8,6 +9,9 @@ public class MaterialManager {
 
     /** The list of all known material types */
     public ArrayList<Material> MATERIALS;
+
+    public ArrayList<Tile> TILES = new ArrayList<>(300);
+
 
     /** Relative Path to the resource file containing the material types */
     private String filePath;
@@ -86,12 +90,13 @@ public class MaterialManager {
             // Get material's isSolid & Apply
             newMaterial.setIsSolid((boolean) currentMaterial.get("isSolid"));
 
-            // Get array of material's pictureID(s)
-            JSONArray pictureIDs = (JSONArray) currentMaterial.get("pictureIDs");
+            // Get array of material's tileID(s)
+            // TODO: CHANGE TO TILE
+            JSONArray tileIDs = (JSONArray) currentMaterial.get("pictureIDs");
 
-            // Iterate over PictureIDs & Add them
-            for (Object picture : pictureIDs) {
-                newMaterial.addPictureID((String) picture);
+            // Iterate over TileIDs & add them
+            for (Object tile : tileIDs) {
+                newMaterial.addTile(TILES.get(Integer.parseInt((String) tile)));
             }
 
             // Add the new Material to the Material Manager
@@ -132,11 +137,11 @@ public class MaterialManager {
             singleMaterial.put("name", currentMaterial.name);
             singleMaterial.put("isSolid", currentMaterial.isSolid);
 
-            // Create a new JSON Array for PictureIDs
-            JSONArray pictureIDs = new JSONArray();
-            for (String picture : currentMaterial.pictureID)
-                pictureIDs.add(picture);
-            singleMaterial.put("pictureIDs", pictureIDs);
+            // Create a new JSON Array for Tiles
+            JSONArray tilesArray = new JSONArray();
+            for (Tile tile : currentMaterial.tiles)
+                tilesArray.add(tile.getID());
+            singleMaterial.put("tiles", tilesArray);
 
             // Insert Array for Material's Values into Material's Object
             // singleMaterial.put("", singleMaterialArray);
@@ -153,5 +158,30 @@ public class MaterialManager {
 
         // All Material Data has been saved to the JSON File
         System.out.println(" Done");
+    }
+
+
+
+    /** Returns a single Material's Image by its ID */
+    public Tile getTileByID(int tileID) {
+        // TODO: sanity checks
+        return TILES.get(tileID);
+    }
+
+
+
+    /** Imports all the Material's Images from a single PNG file */
+    public void loadPictures(String filePath) {
+        // TODO: IMPLEMENT ME PLZ
+        TILES = new ArrayList<Tile>(300);
+
+        for (int i = 1; i<300; i++) {
+            Tile tile = new Tile();
+            tile.ID = i;
+            while (TILES.size() <= i) {
+                TILES.add(tile);
+            }
+            TILES.set(i, tile);
+        }
     }
 }

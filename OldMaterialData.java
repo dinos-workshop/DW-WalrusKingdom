@@ -4,26 +4,32 @@ public class OldMaterialData {
     int id;
     String name;
     boolean isSolid;
-    int PictureID;
+    int TileID;
     int TriggerID;
     public static OldMaterialData[] oldMaterialData = new OldMaterialData[230];
 
-    public OldMaterialData(int _id, String _name, boolean _isSolid, int _PictureID, int _TriggerID) {
+    public OldMaterialData(int _id, String _name, boolean _isSolid, int _TileID, int _TriggerID) {
         this.id = _id;                    // used in the matrix-map
         this.name = _name;                // just for fun
         this.isSolid = _isSolid;        // to check if walking through this is possible
-        this.PictureID = _PictureID;    // picture link (maybe later replace this with a bitmap object or something)
+        this.TileID = _TileID;    // picture link (maybe later replace this with a bitmap object or something)
         this.TriggerID = _TriggerID;    // give a number to every special event that is triggered on walk-overs.
     }
 
-    public static void AddNew(int _id, String _name, boolean _isSolid, int _PictureID, int _TriggerID) {
-        oldMaterialData[_id] = new OldMaterialData(_id, _name, _isSolid, _PictureID, _TriggerID);
+    public static void AddNew(int _id, String _name, boolean _isSolid, int _TileID, int _TriggerID) {
+        oldMaterialData[_id] = new OldMaterialData(_id, _name, _isSolid, _TileID, _TriggerID);
     }
     public static void Import(MaterialManager materialManager) {
         for (OldMaterialData oldMaterialData : OldMaterialData.oldMaterialData) {
-            ArrayList<String> pictureIDs = new ArrayList<String>();
-            pictureIDs.add(oldMaterialData.PictureID+"");
-            materialManager.addMaterial(new Material(oldMaterialData.id, oldMaterialData.name, oldMaterialData.isSolid, pictureIDs));
+            ArrayList<String> TileIDs = new ArrayList<String>();
+            TileIDs.add(oldMaterialData.TileID +"");
+            Material newMaterial = new Material(oldMaterialData.id, oldMaterialData.name, oldMaterialData.isSolid, new ArrayList<Tile>());
+            // Add all tiles
+            for (String tileID : TileIDs) {
+                newMaterial.tiles.add(materialManager.TILES.get(Integer.parseInt(tileID)));
+            }
+
+            materialManager.addMaterial(newMaterial);
         }
     }
 

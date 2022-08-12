@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -10,14 +11,14 @@ public class Material {
     int id;
     String name;
     boolean isSolid;
-    ArrayList<String> pictureID;
+    ArrayList<Tile> tiles;
 
     /** Standard constructor */
-    public Material(int id, String name, boolean isSolid, ArrayList<String> pictureID) {
+    public Material(int id, String name, boolean isSolid, ArrayList<Tile> tiles) {
         this.id = id;                   // the id which represents the position in the array
         this.name = name;				// just for fun
         this.isSolid = isSolid;		    // to check if walking through this is possible
-        this.pictureID = pictureID;	    // picture link (maybe later replace this with a bitmap object or something)
+        this.tiles = tiles;	            // tile object containing a picture
         // So I can check for these IDs instead of having to check for hard-coded coordinates
         // Only for events that are always triggered by such a block, live Saving-points.
     }
@@ -25,7 +26,7 @@ public class Material {
     /** Simplified Constructor used if other parameters are to be added later */
     public Material(int id){
         this.id = id;
-        this.pictureID = new ArrayList<String>();
+        this.tiles = new ArrayList<Tile>(1);
     }
 
     /** Overwrite the Name parameter */
@@ -38,15 +39,15 @@ public class Material {
         this.isSolid = isSolid;
     }
 
-    /** Overwrite the PictureID Parameter with a new ArrayList containing only the new enty */
-    public void setPictureID(String id) {
-        this.pictureID = new ArrayList<String>();
-        pictureID.add(id);
+    /** Overwrite the PictureID Parameter with a new ArrayList containing only the new entry */
+    public void setTile(Tile tile) {
+        this.tiles = new ArrayList<Tile>();
+        tiles.add(tile);
     }
 
     /** Add another PictureID to the Material */
-    public void addPictureID(String id) {
-        this.pictureID.add(id);
+    public void addTile(Tile tile) {
+        this.tiles.add(tile);
     }
 
 }

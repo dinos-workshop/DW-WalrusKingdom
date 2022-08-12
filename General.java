@@ -2,6 +2,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.awt.image.BufferedImage;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,9 +34,15 @@ public class General {
         System.out.println("Initialising Material Manager");
         materialManager = new MaterialManager("./assets/material.json");
 
+        // Load Picture Data from a single huge PNG file, cutting it into hundreds of BufferedImage Objects
+        System.out.println("Loading Image Assets");
+        materialManager.loadPictures("./assets/tiles.png");
+
         // Load Material Data from JSON File into Material Manager
         System.out.println("Loading Material Data");
         materialManager.loadMaterials();
+
+
 
         // Regenerate old Material Data
         // OldMaterialData.LoadOldMaterialData();
@@ -52,7 +59,7 @@ public class General {
         mapManager = new MapManager("./assets/map.json");
         //  mapManager.loadMaps();
 
-        if (true) {
+        if (false) {
             // Regenerate old Map Data
             System.out.println("Loading old Map Data");
             OldMapData.loadCity1();
@@ -71,6 +78,8 @@ public class General {
             // mapManager.loadMaps();
 
         }
+        System.out.println("Saving Map Data");
+        mapManager.saveMaps("./assets/map.json");
 
     }
 
@@ -135,6 +144,5 @@ public class General {
         int _ans = Math.max(_min, Math.min(_max, _x));
         return _ans;
     }
-
 
 }
