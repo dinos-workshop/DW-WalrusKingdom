@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/** A collection of general purpose methods used by various other methods */
+/** A collection of general purpose methods used by various other methods. Also contains the instances of all object managers. */
 public class General {
 
     // The size of all tiles in pixels. Only to be changed if a 3rd party tile source is to be used
@@ -21,8 +21,6 @@ public class General {
     /** The map manager's main instance */
     static MapManager mapManager;
 
-    // TODO: Rethink decision to put the main instances here
-
 
 
     /** Startup method which will initialise any required objects when the game launches */
@@ -36,6 +34,8 @@ public class General {
         System.out.println("Initialising Material Manager");
         materialManager = new MaterialManager("./assets/material.json");
 
+        // importOldData();
+
         // Load Picture Data from a single huge PNG file, cutting it into hundreds of BufferedImage Objects
         System.out.println("Loading Image Assets");
         materialManager.loadTiles("./assets/tiles.png");
@@ -44,40 +44,17 @@ public class General {
         System.out.println("Loading Material Data");
         materialManager.loadMaterials();
 
-        // Regenerate old Material Data
-        // OldMaterialData.LoadOldMaterialData();
-
-        // import old data
-        // OldMaterialData.Import(materialManager);
-
-        // Save all Material Data to the JSON file again, making sure only valid JSON Data is stored there
-        System.out.println("Saving Material Data (Making sure JSON is valid)");
-        materialManager.saveMaterials();
-
         // Initialise Map Manager so map data can be handled
         System.out.println("Initialising Map Manager");
         mapManager = new MapManager("./assets/map.json");
-        //  mapManager.loadMaps();
 
-        if (false) {
-            // Regenerate old Map Data
-            System.out.println("Loading old Map Data");
-            OldMapData.loadCity1();
-            OldMapData.Import(mapManager);
-            OldMapData.loadForestHouse();
-            OldMapData.Import(mapManager);
-            OldMapData.loadMenu();
-            OldMapData.Import(mapManager);
-            OldMapData.loadIntro1();
-            OldMapData.Import(mapManager);
-            // Save all Map Data to a JSON file
-            System.out.println("Saving Map Data");
-            mapManager.saveMaps("./assets/map.json");
-            // Re-Import Map Data to detect any Errors
-            System.out.println("Trying to load freshly exported Map Data");
-            // mapManager.loadMaps();
+        // Load Map Data from JSON File into Map Manager
+        System.out.println("Loading Map Data");
+        mapManager.loadMaps();
 
-        }
+
+
+
         System.out.println("Saving Map Data");
         mapManager.saveMaps("./assets/map.json");
 
@@ -95,11 +72,9 @@ public class General {
         Object obj = null;
         try {
             obj = parser.parse(new FileReader(filePath));
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        } catch (
-                ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 
@@ -134,12 +109,12 @@ public class General {
 
     /** Returns a material from the Material Collection by its MaterialID */
     public static Material materialFromID(int materialID) {
-        // System.out.println("getMaterialFromID("+materialID+") => #"+materialManager.MATERIALS.get(materialID).id);
         return materialManager.MATERIALS.get(materialID);
     }
 
 
 
+    /** Limits an integer value between a min and a max value */
     public static int getBetween(int _min, int _x, int _max) {
         int _ans = Math.max(_min, Math.min(_max, _x));
         return _ans;
@@ -157,5 +132,36 @@ public class General {
     /** Returns the game's tileSize, the size in pixels of each tile. */
     public static int getTileSize() {
         return tileSize;
+    }
+
+
+    public static void importOldData() {
+        // Regenerate old Material Data
+        OldMaterialData.LoadOldMaterialData();
+
+        // import old material data
+        OldMaterialData.Import(materialManager);
+
+        // Save all Material Data to the JSON file again, making sure only valid JSON Data is stored there
+        System.out.println("Saving Material Data (Making sure JSON is valid)");
+        materialManager.saveMaterials();
+
+        // Regenerate old Map Data
+        System.out.println("Loading old Map Data");
+        OldMapData.loadCity1();
+        OldMapData.Import(mapManager);
+        OldMapData.loadForestHouse();
+        OldMapData.Import(mapManager);
+        OldMapData.loadMenu();
+        OldMapData.Import(mapManager);
+        OldMapData.loadIntro1();
+        OldMapData.Import(mapManager);
+
+        // Save all Map Data to a JSON file
+        System.out.println("Saving Map Data");
+        mapManager.saveMaps("./assets/map.json");
+
+        // Re-Import Map Data to detect any Errors
+        System.out.println("Trying to load freshly exported Map Data");
     }
 }

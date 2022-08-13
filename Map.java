@@ -1,11 +1,14 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
-/** A complete Map made up of a 2D-Array of separate MapTiles. It also contains map-specific information.
+/** A complete Map made up of a 2D-ArrayList of separate MapTiles. It also contains map-specific information.
  * mapData: The actual map data
  * name: The Map's Name
  * spawnX: The spawn location's X-coordinate
  * spawnY: The spawn location's Y-coordinate
+ * spawnDir: The direction (north/east/south/west) to face when spawning
+ * width: The Map's width in Tiles
+ * height: The Map's height in Tiles
+ * fillMaterial: A MapTile to be used whenever there is a hole in the given Map Data
  */
 public class Map {
     String name;
@@ -19,12 +22,7 @@ public class Map {
 
 
 
-    /** The default constructor, only creating an empty first row and column for the 2D-Map */
-    public Map() {
 
-        // Adds first Row
-        // this.mapData.add(new ArrayList<MapTile>());
-    }
 
 
 
