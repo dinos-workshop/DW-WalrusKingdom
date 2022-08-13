@@ -2,13 +2,15 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.awt.image.BufferedImage;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 /** A collection of general purpose methods used by various other methods */
 public class General {
+
+    // The size of all tiles in pixels. Only to be changed if a 3rd party tile source is to be used
+    public static int tileSize = 24;
 
     // The Trigger Manager's main instance */
     static TriggerManager triggerManager;
@@ -36,13 +38,11 @@ public class General {
 
         // Load Picture Data from a single huge PNG file, cutting it into hundreds of BufferedImage Objects
         System.out.println("Loading Image Assets");
-        materialManager.loadPictures("./assets/tiles.png");
+        materialManager.loadTiles("./assets/tiles.png");
 
         // Load Material Data from JSON File into Material Manager
         System.out.println("Loading Material Data");
         materialManager.loadMaterials();
-
-
 
         // Regenerate old Material Data
         // OldMaterialData.LoadOldMaterialData();
@@ -145,4 +145,17 @@ public class General {
         return _ans;
     }
 
+
+
+    /** Overwrites the game's tileSize, the size in pixels of each tile. Only to be changed if 3rd party Tiles are to be used */
+    public static void setTileSize(int size) {
+        tileSize = 24;
+    }
+
+
+
+    /** Returns the game's tileSize, the size in pixels of each tile. */
+    public static int getTileSize() {
+        return tileSize;
+    }
 }

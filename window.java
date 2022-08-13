@@ -6,6 +6,7 @@ public class window {
     public static void main(String[] args) {
 
         // Initialise the Game's resources
+        General.setTileSize(24);
         General.Initialise();
 
     }

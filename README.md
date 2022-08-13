@@ -9,7 +9,7 @@ Most parts of the basic engine were already working but quite some interactive f
 After the first version was little more than a proof of concept (writing an entire game engine with little more that Arrays, Ints and Strings) the second version aims to be an actual game that is hopefully fun to play.
 
 
-## Current state of development (as of v0.0.12):
+## Current state of development (as of v0.0.14):
 
 Materials
 - [x] Data Structure for Material Types
@@ -32,12 +32,16 @@ Game Data
 - [ ] Add checks for broken JSON files or missing contents
 - [x] Import & adapt old Material Data (from v1)
 - [x] Import & adapt old Map Data (from v1)
-- [ ] Import old Tiles (Bitmaps from v1)
+- [x] Import old Tiles (Bitmaps from v1)
 
 Graphics
-- [ ] Linking Bitmaps to Materials
+- [x] Linking Bitmaps to Materials
+- [ ] Main Game Loop
 - [ ] Basic map renderer
 - [ ] Player controls
+- [ ] Scrolling
+- [ ] Smooth Scrolling
 
 Everything else
+- [ ] More Advanced Debug Outputs
 - [ ] super important stuff?

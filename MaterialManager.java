@@ -1,6 +1,7 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -92,11 +93,11 @@ public class MaterialManager {
 
             // Get array of material's tileID(s)
             // TODO: CHANGE TO TILE
-            JSONArray tileIDs = (JSONArray) currentMaterial.get("pictureIDs");
+            JSONArray tileIDs = (JSONArray) currentMaterial.get("tiles");
 
             // Iterate over TileIDs & add them
             for (Object tile : tileIDs) {
-                newMaterial.addTile(TILES.get(Integer.parseInt((String) tile)));
+                newMaterial.addTile(TILES.get(Integer.parseInt(tile + "")));
             }
 
             // Add the new Material to the Material Manager
@@ -171,17 +172,22 @@ public class MaterialManager {
 
 
     /** Imports all the Material's Images from a single PNG file */
-    public void loadPictures(String filePath) {
+    public void loadTiles(String filePath) {
         // TODO: IMPLEMENT ME PLZ
         TILES = new ArrayList<Tile>(300);
 
-        for (int i = 1; i<300; i++) {
-            Tile tile = new Tile();
-            tile.ID = i;
-            while (TILES.size() <= i) {
+        System.out.println("Loading Tile Source");
+        TileSource tileSource = new TileSource(filePath);
+
+        for (int id = 1; id<300; id++) {
+            Tile tile = new Tile(tileSource.getTile(id), id);
+            while (TILES.size() <= id) {
                 TILES.add(tile);
             }
-            TILES.set(i, tile);
+            TILES.set(id, tile);
         }
     }
+
+
+
 }
