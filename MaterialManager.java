@@ -41,20 +41,9 @@ public class MaterialManager {
             }
         }
 
-        // Add new Material type at assigned ID
+        // Add new Material type at assigned ID and give progress feedback
         MATERIALS.set(material.id, material);
-
-        //System.out.print("'" + material.name + "' has been added, Pictures {");
         System.out.print('.');
-
-        /*
-        // Iterate over all included pictureIDs and print each of them
-        for (String id : material.pictureID) {
-            System.out.print(id + ", ");
-        }
-        System.out.print("}, id='" + material.id+"'");
-        System.out.println();
-         */
     }
 
 

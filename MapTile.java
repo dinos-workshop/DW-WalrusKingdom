@@ -5,6 +5,8 @@ import java.util.ArrayList;
  * backgroundMaterials: ArrayList of all Materials rendered behind characters
  * triggerIDs: ArrayList of all trigger regions present in the area, such as silent teleports, speed effects or interactions
  * charOffsetY: Value by which characters at this position will be shifted up/down, to be used for stairs and bridges to imply height levels
+ * xPos: The x-Position of the tile
+ * yPos: The y-Position of the tile
  */
 public class MapTile {
     ArrayList<Material> foregroundMaterials;
@@ -56,6 +58,8 @@ public class MapTile {
     /** Adds a Material to the Foreground Materials by its MaterialID */
     public void addForegroundMaterial(int materialID) {
         Material material = General.materialFromID(materialID);
+
+        // Sanity Check
         if (material != null) {
             this.foregroundMaterials.add(material);
         } else {

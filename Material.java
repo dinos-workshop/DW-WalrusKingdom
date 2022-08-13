@@ -39,7 +39,7 @@ public class Material {
         this.isSolid = isSolid;
     }
 
-    /** Overwrite the PictureID Parameter with a new ArrayList containing only the new entry */
+    /** Overwrite the list of Tiles with a new ArrayList containing only a single new entry */
     public void setTile(Tile tile) {
         this.tiles = new ArrayList<Tile>();
         tiles.add(tile);
@@ -51,5 +51,3 @@ public class Material {
     }
 
 }
-
-// TODO: Replace String PictureID with actual bitmaps

@@ -10,7 +10,11 @@ public class TileSource extends Component {
 
     /** Default Constructor, tries to import the tiles source file */
     public TileSource(String filePath) {
+
+        // The size of each tile to be used in the game
         int tileSize = General.getTileSize();
+
+        // Try to read the file's content
         try {
             tileSource = ImageIO.read(TileSource.class.getResourceAsStream(filePath));
         }
@@ -53,7 +57,7 @@ public class TileSource extends Component {
             return tileSource.getSubimage(tileX*(tileSize+1)+1, tileY*(tileSize+1)+1, tileSize, tileSize);
         }
         catch(Exception e){
-            System.out.println("Couldn't load tile subimage. If TILESIZE==" + tileSize + " is correct, better check the sourcefile.");
+            System.out.println("Couldn't load tile subimage. If TileSize==" + tileSize + " is correct, better check the source file.");
             return new BufferedImage(0, 0, 0);
         }
     }
@@ -70,7 +74,7 @@ public class TileSource extends Component {
             return tileSource.getSubimage(xPos, yPos, tileWidth-xPos, tileHeight-yPos);
         }
         catch(Exception e){
-            System.out.println("Couldn't load tile subimage. If TILESIZE==" + tileSize + " is correct, better check the sourcefile.");
+            System.out.println("Couldn't load tile subimage. If TileSize==" + tileSize + " is correct, better check the source file.");
             return new BufferedImage(0, 0, 0);
         }
     }

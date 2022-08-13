@@ -15,8 +15,7 @@ public class MapManager {
 
     /** Default constructor which will load resources from the default save file */
     public MapManager() {
-
-        // Load default File Path
+        // Load default File Path as no other was specified
         this.filePath = filePath;
     }
 
@@ -24,8 +23,7 @@ public class MapManager {
 
     /** Constructor which will load resources from a given save file */
     public MapManager(String filePath) {
-
-        // overwrite the default file path
+        // Overwrite the default file path
         this.filePath = filePath;
     }
 
@@ -33,6 +31,7 @@ public class MapManager {
 
     /** Will parse a JSON file and return all contained MapTiles as a Map element. Uses the default file. */
     public void loadMaps() {
+        // Load Maps from default File Path as no other was specified
         loadMaps(this.filePath);
     }
 
@@ -74,7 +73,7 @@ public class MapManager {
             // Apply the initial Spawn Direction
             currentMap.setSpawnDir((String) mapInfoObj.get("spawnDir"));
 
-            // Apply the Map's Size and FillMaterial which will be stacked in case the Map is smaller than the screen area
+            // Apply the Map's Size and FillMaterial which will fill map holes and be stacked in case the Map is smaller than the screen area
 
             // Get the JSON Object for the FillMaterial Array
             Object fillMatObj = mapInfoObj.get("fillMaterial");
@@ -125,7 +124,7 @@ public class MapManager {
                 currentMapTile.setXPos(xPos);
                 currentMapTile.setYPos(yPos);
 
-                // Apply MapTile's charOffsetY
+                // Apply MapTile's charOffsetY which is uset to simulate bridges and stairs (faking a 3rd dimension)
                 currentMapTile.setCharOffsetY((int) (long) currentMapTileJSON.get("charOffsetY"));
 
                 // Iterate over foreground materials on current MapTile in order to add them
@@ -160,7 +159,7 @@ public class MapManager {
                 System.out.print('.');
 
             }
-            // The map data has been put into a new Map object. Adding it to Maps Array
+            // The map data has been put into a new Map object. Adding it to MapManager's Maps Array
             System.out.println(" Done");
             MAPS.add(currentMap);
 
@@ -173,7 +172,6 @@ public class MapManager {
 
     /** Will create a JSON file from the Maps ArrayList and write it into a file. Uses the default file. */
     public void saveMaps() {
-
         // Calls overloaded method but with default file path as none was given
         saveMaps(this.filePath);
     }
@@ -230,6 +228,7 @@ public class MapManager {
             JSONArray MapDataArray = new JSONArray();
 
             // TODO: Make sure height and width parameters actually comply with map data
+
             // Iterate over separate Map Tiles
             for (int yPos = 0; yPos < currentMap.height; yPos++) {
                 for (int xPos = 0; xPos < currentMap.width; xPos++) {
@@ -267,7 +266,7 @@ public class MapManager {
                     MapDataObj.put("triggers", triggerArray);
 
                     // TODO: Add Coords to Filler Material MapTiles so they don't all return as x=0,y=0
-                    // TODO: Filter MapTiles only containing FillerMaterial Data, maybe by adding a special isFiller Trigger?
+                    // TODO: Add a special trigger to the FillerMaterial so when applying new map tiles collisions with non-fillers can easily be detected
 
                     // Add additional data to current MapTile.
                     MapDataObj.put("x", xPos);
