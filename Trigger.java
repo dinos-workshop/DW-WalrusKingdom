@@ -1,6 +1,9 @@
 /** Defines all Triggers available inside the game such as Popup messages, Dialogues and invisible engine-modifiers */
 public enum Trigger {
 
+    /** NOT A TRIGGER. This Dummy Trigger is used to mark all MapTiles that were auto-created as copies of the Filler Material */
+    NOT_A_TRIGGER_IS_FILLER_MATERIAL("NOT_A_TRIGGER_IS_FILLER_MATERIAL", TriggerStyle.INVISIBLE),
+
     /** Press A to read the sign next to you */
     MSG_READ_SIGN("MSG_READ_SIGN", TriggerStyle.POPUP_SINGLE),
 

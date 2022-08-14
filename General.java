@@ -34,19 +34,19 @@ public class General {
         System.out.println("Initialising Material Manager");
         materialManager = new MaterialManager("./assets/material.json");
 
-        // importOldData();
+        // Initialise Map Manager so map data can be handled
+        System.out.println("Initialising Map Manager");
+        mapManager = new MapManager("./assets/map.json");
 
         // Load Picture Data from a single huge PNG file, cutting it into hundreds of BufferedImage Objects
         System.out.println("Loading Image Assets");
         materialManager.loadTiles("./assets/tiles.png");
 
+        // importOldData();
+
         // Load Material Data from JSON File into Material Manager
         System.out.println("Loading Material Data");
         materialManager.loadMaterials();
-
-        // Initialise Map Manager so map data can be handled
-        System.out.println("Initialising Map Manager");
-        mapManager = new MapManager("./assets/map.json");
 
         // Load Map Data from JSON File into Map Manager
         System.out.println("Loading Map Data");
@@ -54,9 +54,10 @@ public class General {
 
 
 
-
+        // Save the Map Data to a JSON File
         System.out.println("Saving Map Data");
         mapManager.saveMaps("./assets/map.json");
+
 
     }
 
@@ -156,12 +157,5 @@ public class General {
         OldMapData.Import(mapManager);
         OldMapData.loadIntro1();
         OldMapData.Import(mapManager);
-
-        // Save all Map Data to a JSON file
-        System.out.println("Saving Map Data");
-        mapManager.saveMaps("./assets/map.json");
-
-        // Re-Import Map Data to detect any Errors
-        System.out.println("Trying to load freshly exported Map Data");
     }
 }

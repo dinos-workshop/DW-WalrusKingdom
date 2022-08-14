@@ -1,8 +1,5 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /** Manages loading all material types as well as their respective getters and setters */
@@ -80,8 +77,7 @@ public class MaterialManager {
             // Get material's isSolid & Apply
             newMaterial.setIsSolid((boolean) currentMaterial.get("isSolid"));
 
-            // Get array of material's tileID(s)
-            // TODO: CHANGE TO TILE
+            // Get array of Material's Tiles
             JSONArray tileIDs = (JSONArray) currentMaterial.get("tiles");
 
             // Iterate over TileIDs & add them

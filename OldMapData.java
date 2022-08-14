@@ -419,9 +419,11 @@ public class OldMapData {
         // Create a dummy MapTile object
         MapTile currentMapTile;
 
-        // Prepare fillerMaterial even tho it should not be used since we're importing a 2D-Array which can't contain a NULL
+        // Prepare fillerMaterial even tho it should not be used since we're importing a 2D-Array which can't contain a NULL.
+        // FillMaterial will still be written into the Map Data's JSON File.
         MapTile fillMaterial = new MapTile();
         fillMaterial.addBackgroundMaterial(0);
+        fillMaterial.triggerIDs.add(Trigger.NOT_A_TRIGGER_IS_FILLER_MATERIAL);
         Map currentMap = new Map();
         currentMap.setName(name);
         currentMap.setSpawnX(spawnX);
@@ -434,16 +436,20 @@ public class OldMapData {
             for (int yPos = 0; yPos < Map[xPos].length; yPos++) {
                     // reset the MapTile Dummy Object
                 currentMapTile = new MapTile();
-
                 // Get the Map data and extract both the foreground and background materialID and stuff them into the MapTile
                 int materialID = (int) Map[xPos][yPos];
-                int foregroundMaterial = materialID % 901;
-                int backgroundMaterial = (int) Math.floor(materialID / 901);
-                // System.out.println("material #: "+foregroundMaterial +" & " + backgroundMaterial);
-                // currentMapTile.foregroundMaterials.set(0,General.materialFromID(foregroundMaterial));
-                currentMapTile.addForegroundMaterial(foregroundMaterial);
-                currentMapTile.addBackgroundMaterial(backgroundMaterial);
-                currentMapTile.addTrigger(EventMap[xPos][yPos]+"");
+
+                // Check if the MapTile is empty - if so, skip it. Holes in the Map like this will then be willed with FillMaterial when loading the Map.
+                if (materialID != 0) {
+                    int foregroundMaterial = materialID % 901;
+                    int backgroundMaterial = (int) Math.floor(materialID / 901);
+                    // System.out.println("material #: "+foregroundMaterial +" & " + backgroundMaterial);
+                    // currentMapTile.foregroundMaterials.set(0,General.materialFromID(foregroundMaterial));
+                    currentMapTile.addForegroundMaterial(foregroundMaterial);
+                    currentMapTile.addBackgroundMaterial(backgroundMaterial);
+                    currentMapTile.addTrigger(EventMap[xPos][yPos] + "");
+                }
+
 
                 // Apply coordinates to MapTile
                 currentMapTile.setXPos(xPos);

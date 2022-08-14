@@ -227,14 +227,37 @@ public class MapManager {
             // Create Outer JSON Structure for Map Data (Array will contain Objects for each MapTile)
             JSONArray MapDataArray = new JSONArray();
 
-            // TODO: Make sure height and width parameters actually comply with map data
+            // Make sure the Map Data is not corrupted
+            if ((currentMap.mapData.size() != currentMap.height) || (currentMap.mapData.get(0).size() != currentMap.width)) {
+                System.out.println("ERROR: Size of Map does not match expectations. WRONG MAP DIMENSIONS");
+            }
 
             // Iterate over separate Map Tiles
             for (int yPos = 0; yPos < currentMap.height; yPos++) {
                 for (int xPos = 0; xPos < currentMap.width; xPos++) {
 
+                    // Make sure the Map Data is not corrupted
+                    if ((currentMap.mapData.get(yPos) == null) || (currentMap.mapData.get(yPos).size() == 0) || (currentMap.mapData.get(yPos).get(0) == null)) {
+                        System.out.println("ERROR: Size of Map does not match expectations: MISSING MAP LINE");
+                    }
+
                     // Get currently handled MapTile for easier access
                     MapTile currentMapTile = currentMap.mapData.get(yPos).get(xPos);
+
+                    // Make sure the Map Data is not corrupted
+                    if ((currentMapTile == null) || (currentMapTile.triggerIDs == null)) {
+                        System.out.println("ERROR: Content of Map does not match expectations: MISSING MAP TILE DATA");
+                    }
+
+                    // TODO: ABORT SAVING CURRENT TILE IF FILLER MATERIAL TRIGGER IS PRESENT
+                    /*
+                    if ((currentMapTile.triggerIDs.size() != 0) && (currentMapTile.triggerIDs.get(0) != null)) {
+                        System.out.println("trigger: " + currentMapTile.triggerIDs.get(0).name);
+                        if (currentMapTile.triggerIDs.get(0).name.equals("NOT_A_TRIGGER_IS_FILLER_MATERIAL")) {
+                            System.out.println("Filler Tile, do not save");
+                        }
+                    }
+                    */
 
                     // Create JSON Object for current Map Tile
                     JSONObject MapDataObj = new JSONObject();
@@ -275,7 +298,6 @@ public class MapManager {
 
                     // Add current MapTile's Data to the Array
                     MapDataArray.add(MapDataObj);
-
                 }
                 // Log progress (only for lines to reduce spam)
                 System.out.print('.');

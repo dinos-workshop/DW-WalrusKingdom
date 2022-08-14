@@ -80,6 +80,9 @@ public class Map {
         this.width = width;
         this.fillMaterial = fillMaterial;
 
+        // Add a Dummy Trigger which will serve as a marker, showing which MapTiles are copies of the Filler Material
+        this.fillMaterial.triggerIDs.add(Trigger.NOT_A_TRIGGER_IS_FILLER_MATERIAL);
+
         // Set reserved Space for Map ArrayList
         while (this.mapData.size() < this.height) {
             this.mapData.add(new ArrayList<MapTile>(this.width));
@@ -90,8 +93,10 @@ public class Map {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
 
-                // Add FillerMaterial which will be overwritten with actual MapData
+                // Add FillerMaterial as default to all MapTiles and apply correct coordinates. Actual MapData will later overwrite these defaults.
                 this.mapData.get(y).add(this.fillMaterial);
+                this.mapData.get(y).get(this.mapData.get(y).size()-1).setXPos(x);
+                this.mapData.get(y).get(this.mapData.get(y).size()-1).setYPos(x);
             }
 
             // Track progress
@@ -115,7 +120,11 @@ public class Map {
             for (MapTile x : y) {
 
                 // Print the first of the Foreground-Material's IDs
-                System.out.printf("%4s", x.foregroundMaterials.get(0).id);
+                if (x != null && x.foregroundMaterials != null && x.foregroundMaterials.size() >= 1 && x.foregroundMaterials.get(0) != null) {
+                    System.out.printf("%4s", x.foregroundMaterials.get(0).id);
+                } else {
+                    System.out.printf("%4s", '-');
+                }
             }
 
             // Add a line break
