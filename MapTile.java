@@ -100,5 +100,23 @@ public class MapTile {
         // Get the Trigger object from MaterialManager and add it to the ArrayList of Triggers
         this.addTrigger(General.triggerManager.getTriggerByName(trigger));
     }
+
+
+
+    // Returns a Trigger's Name by its Array Position or an empty String if there is no such Trigger
+    public String getTriggerName(int position) {
+        // Make sure the Trigger is valid and return its Name
+        if(this.triggerIDs.size()>position && triggerIDs.get(position)!=null) {
+            return this.triggerIDs.get(position).name;
+        } else {
+            // Return an empty String to avoid Null Pointer Exceptions
+            return "";
+        }
+    }
+
+
+
+
+
 }
 

@@ -42,17 +42,14 @@ public class General {
         System.out.println("Loading Image Assets");
         materialManager.loadTiles("./assets/tiles.png");
 
-        // importOldData();
-
         // Load Material Data from JSON File into Material Manager
         System.out.println("Loading Material Data");
         materialManager.loadMaterials();
 
         // Load Map Data from JSON File into Map Manager
         System.out.println("Loading Map Data");
-        mapManager.loadMaps();
-
-
+        //  mapManager.loadMaps();
+        importOldMapData();
 
         // Save the Map Data to a JSON File
         System.out.println("Saving Map Data");
@@ -136,7 +133,7 @@ public class General {
     }
 
 
-    public static void importOldData() {
+    public static void importOldMaterialData() {
         // Regenerate old Material Data
         OldMaterialData.LoadOldMaterialData();
 
@@ -146,7 +143,9 @@ public class General {
         // Save all Material Data to the JSON file again, making sure only valid JSON Data is stored there
         System.out.println("Saving Material Data (Making sure JSON is valid)");
         materialManager.saveMaterials();
+    }
 
+    public static void importOldMapData() {
         // Regenerate old Map Data
         System.out.println("Loading old Map Data");
         OldMapData.loadCity1();

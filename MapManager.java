@@ -190,6 +190,9 @@ public class MapManager {
         // Insert Material Data into JSON
         for (Map currentMap : MAPS ) {
 
+            // Statistics on skipped MapTiles during Map Export
+            int skippedMapTiles = 0;
+
             // Create JSON Objects for each map
             JSONObject currentMapObj = new JSONObject();
 
@@ -249,55 +252,53 @@ public class MapManager {
                         System.out.println("ERROR: Content of Map does not match expectations: MISSING MAP TILE DATA");
                     }
 
-                    // TODO: ABORT SAVING CURRENT TILE IF FILLER MATERIAL TRIGGER IS PRESENT
-                    /*
-                    if ((currentMapTile.triggerIDs.size() != 0) && (currentMapTile.triggerIDs.get(0) != null)) {
-                        System.out.println("trigger: " + currentMapTile.triggerIDs.get(0).name);
-                        if (currentMapTile.triggerIDs.get(0).name.equals("NOT_A_TRIGGER_IS_FILLER_MATERIAL")) {
-                            System.out.println("Filler Tile, do not save");
-                        }
-                    }
-                    */
+                    // Make sure the Tile is nur just an auto-generated Filler Material Tile
+                    if (currentMapTile.getTriggerName(0).equals("NOT_A_TRIGGER_IS_FILLER_MATERIAL")) {
+                        // System.out.println("Filler Tile, do not save");
+                        skippedMapTiles++;
+                    } else {
+                        // Map Tile is valid, no corrupted Data, no auto-generated Filler Material. Save me!
 
-                    // Create JSON Object for current Map Tile
-                    JSONObject MapDataObj = new JSONObject();
+                        // Create JSON Object for current Map Tile
+                        JSONObject MapDataObj = new JSONObject();
 
-                    // Create JSON Structure for Map Data
-                    JSONArray foregroundArray = new JSONArray();
-                    JSONArray backgroundArray = new JSONArray();
-                    JSONArray triggerArray = new JSONArray();
+                        // Create JSON Structure for Map Data
+                        JSONArray foregroundArray = new JSONArray();
+                        JSONArray backgroundArray = new JSONArray();
+                        JSONArray triggerArray = new JSONArray();
 
-                    // Apply Material IDs and Triggers
-                    if (currentMapTile != null) {
-                        for (Material foregroundMat : currentMapTile.foregroundMaterials)
-                            foregroundArray.add(foregroundMat.id);
+                        // Apply Material IDs and Triggers
+                        if (currentMapTile != null) {
+                            for (Material foregroundMat : currentMapTile.foregroundMaterials)
+                                foregroundArray.add(foregroundMat.id);
 
-                        for (Material backgroundMat : currentMapTile.backgroundMaterials)
-                            backgroundArray.add(backgroundMat.id);
+                            for (Material backgroundMat : currentMapTile.backgroundMaterials)
+                                backgroundArray.add(backgroundMat.id);
 
-                        // Make sure the MapTile has any triggers
-                        if ((currentMapTile.triggerIDs.size() != 0) && (currentMapTile.triggerIDs.get(0) != null)) {
-                            for (Trigger triggerNames : currentMapTile.triggerIDs) {
-                                triggerArray.add(triggerNames.name);
+                            // Make sure the MapTile has any triggers
+                            if ((currentMapTile.triggerIDs.size() != 0) && (currentMapTile.triggerIDs.get(0) != null)) {
+                                for (Trigger triggerNames : currentMapTile.triggerIDs) {
+                                    triggerArray.add(triggerNames.name);
+                                }
                             }
                         }
+
+                        // Put freshly filled Data Arrays into correct JSON Structure
+                        MapDataObj.put("foreground", foregroundArray);
+                        MapDataObj.put("background", backgroundArray);
+                        MapDataObj.put("triggers", triggerArray);
+
+                        // TODO: Add Coords to Filler Material MapTiles so they don't all return as x=0,y=0
+                        // TODO: Add a special trigger to the FillerMaterial so when applying new map tiles collisions with non-fillers can easily be detected
+
+                        // Add additional data to current MapTile.
+                        MapDataObj.put("x", xPos);
+                        MapDataObj.put("y", yPos);
+                        MapDataObj.put("charOffsetY", currentMapTile.charOffsetY);
+
+                        // Add current MapTile's Data to the Array
+                        MapDataArray.add(MapDataObj);
                     }
-
-                    // Put freshly filled Data Arrays into correct JSON Structure
-                    MapDataObj.put("foreground", foregroundArray);
-                    MapDataObj.put("background", backgroundArray);
-                    MapDataObj.put("triggers", triggerArray);
-
-                    // TODO: Add Coords to Filler Material MapTiles so they don't all return as x=0,y=0
-                    // TODO: Add a special trigger to the FillerMaterial so when applying new map tiles collisions with non-fillers can easily be detected
-
-                    // Add additional data to current MapTile.
-                    MapDataObj.put("x", xPos);
-                    MapDataObj.put("y", yPos);
-                    MapDataObj.put("charOffsetY", currentMapTile.charOffsetY);
-
-                    // Add current MapTile's Data to the Array
-                    MapDataArray.add(MapDataObj);
                 }
                 // Log progress (only for lines to reduce spam)
                 System.out.print('.');
@@ -310,7 +311,11 @@ public class MapManager {
             maps.add(currentMapObj);
 
             // The Map's Data has been saved to the JSON File
-            System.out.println(" Done");
+            if (skippedMapTiles == 0) {
+                System.out.println(" Done");
+            } else {
+                System.out.println(" Done (skipping " + skippedMapTiles + " of " + (currentMap.width* currentMap.height) + ')');
+            }
 
         }
 
