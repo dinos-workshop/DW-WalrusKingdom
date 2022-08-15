@@ -48,8 +48,8 @@ public class General {
 
         // Load Map Data from JSON File into Map Manager
         System.out.println("Loading Map Data");
-        //  mapManager.loadMaps();
-        importOldMapData();
+        mapManager.loadMaps();
+        // importOldMapData();
 
         // Save the Map Data to a JSON File
         System.out.println("Saving Map Data");

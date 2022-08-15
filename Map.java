@@ -35,7 +35,7 @@ public class Map {
 
         // Check if the requested position is actually outside the Map
         if ((yPos != newMapTile.yPos) || (xPos != newMapTile.xPos))
-            System.out.println("WARN: Out of bounds map tile coordinate: (x" + newMapTile.xPos + "/y" + newMapTile.yPos + ')');
+            System.out.println("WARN: MapTile (x:"+newMapTile.xPos+", y:"+newMapTile.yPos+" is outside of Map '"+this.name+" (size w:"+this.width+"h:"+this.height);
 
         // Add the MapTile at the adapted coordinates, overwriting the default FillerMaterial
         // System.out.println("Added material #" + newMapTile.foregroundMaterials.get(0).id + " at x="+xPos+" y="+yPos);
@@ -138,6 +138,23 @@ public class Map {
     public void setFillMaterial(MapTile fillMaterial) {
         this.fillMaterial = fillMaterial;
     }
+
+
+
+    /** Returns a single MapTile by its x- and y-pos. Will warn if the requested MapTile does not exist. */
+    public MapTile getMapTile(int yPos, int xPos) {
+        int realYPos = General.getBetween(0, yPos, this.height-1);
+        int realXPos = General.getBetween(0, xPos, this.width-1);
+        if ((realXPos != xPos) || (realYPos != yPos))
+            System.out.println("WARN: MapTile (x:"+xPos+", y:"+yPos+" is outside of Map '"+this.name+" (size w:"+this.width+"h:"+this.height);
+        return mapData.get(realYPos).get(realXPos);
+    }
+    /*
+    // Make sure the Map Data is not corrupted
+                    if ((currentMap.mapData.get(yPos) == null) || (currentMap.mapData.get(yPos).size() == 0) || (currentMap.mapData.get(yPos).get(0) == null)) {
+                        System.out.println("ERROR: Size of Map does not match expectations: MISSING MAP LINE");
+                    }
+     */
 }
 
 // TODO: after loading all the map data, iterate over all coordinates and layers in order to create a 2d-bool-array of isSolid (loading collision data)

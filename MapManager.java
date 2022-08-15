@@ -124,7 +124,7 @@ public class MapManager {
                 currentMapTile.setXPos(xPos);
                 currentMapTile.setYPos(yPos);
 
-                // Apply MapTile's charOffsetY which is uset to simulate bridges and stairs (faking a 3rd dimension)
+                // Apply MapTile's charOffsetY which is used to simulate bridges and stairs (faking a 3rd dimension)
                 currentMapTile.setCharOffsetY((int) (long) currentMapTileJSON.get("charOffsetY"));
 
                 // Iterate over foreground materials on current MapTile in order to add them
@@ -151,6 +151,13 @@ public class MapManager {
                     // For all TriggerIDs: Add the current Trigger to the current MapTile Dummy by handing over its Name
                     currentMapTile.addTrigger((String) triggerObj);
                 }
+
+                // Check if the MapTile is overwriting other Data
+                MapTile oldMapTile = currentMap.getMapTile(yPos, xPos);
+                if (oldMapTile.getTriggerName(0) != "" && oldMapTile.getTriggerName(0)!="NOT_A_TRIGGER_IS_FILLER_MATERIAL") {
+                    System.out.println("WARN: MapTile(x:"+xPos+",y:"+yPos+") is overwriting existing Map Data");
+                }
+
 
                 // Add latest MapTile to current Map
                 currentMap.addMapTile(currentMapTile);
@@ -239,13 +246,8 @@ public class MapManager {
             for (int yPos = 0; yPos < currentMap.height; yPos++) {
                 for (int xPos = 0; xPos < currentMap.width; xPos++) {
 
-                    // Make sure the Map Data is not corrupted
-                    if ((currentMap.mapData.get(yPos) == null) || (currentMap.mapData.get(yPos).size() == 0) || (currentMap.mapData.get(yPos).get(0) == null)) {
-                        System.out.println("ERROR: Size of Map does not match expectations: MISSING MAP LINE");
-                    }
-
                     // Get currently handled MapTile for easier access
-                    MapTile currentMapTile = currentMap.mapData.get(yPos).get(xPos);
+                    MapTile currentMapTile = currentMap.getMapTile(yPos, xPos);
 
                     // Make sure the Map Data is not corrupted
                     if ((currentMapTile == null) || (currentMapTile.triggerIDs == null)) {
